@@ -1,0 +1,12 @@
+{
+  "name": "Abhilash Sharma — AI-Native Quality Engineering",
+  "short_name": "Abhilash Sharma",
+  "description": "AI agents, test platforms, reliability engineering, and production observability.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07111d",
+  "theme_color": "#07111d",
+  "icons": [
+    { "src": "/assets/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
