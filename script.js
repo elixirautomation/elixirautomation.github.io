@@ -223,11 +223,11 @@
 
   const careerTimeline = $('[data-career-timeline]');
   const careerItems = $$('.career-item', careerTimeline || document);
+  const careerDisclosures = $$('[data-career-disclosure]', careerTimeline || document);
+  const compactCareer = matchMedia('(max-width: 900px)');
   const clamp = (value, min = 0, max = 1) => Math.min(Math.max(value, min), max);
 
-  if (careerItems.length && (reducedMotion || !('requestAnimationFrame' in window))) {
-    careerItems.forEach(item => item.classList.add('in-view'));
-  }
+  careerItems.forEach(item => item.classList.add('in-view'));
 
   let scrollTicking = false;
   const renderScrollEffects = () => {
@@ -235,7 +235,7 @@
     const scrollRange = document.documentElement.scrollHeight - innerHeight;
     root.style.setProperty('--page-progress', scrollRange > 0 ? clamp(scrollY / scrollRange).toFixed(4) : '1');
 
-    if (!careerTimeline || reducedMotion || !careerItems.length) return;
+    if (!careerTimeline || !careerItems.length) return;
 
     const timelineRect = careerTimeline.getBoundingClientRect();
     const focusY = innerHeight * 0.58;
@@ -247,7 +247,7 @@
     const firstNode = nodeCenters[0];
     const lastNode = nodeCenters[nodeCenters.length - 1];
     const lineDistance = Math.max(lastNode - firstNode, 1);
-    const lineProgress = clamp((focusY - firstNode) / lineDistance);
+    const lineProgress = reducedMotion ? 1 : clamp((focusY - firstNode) / lineDistance);
 
     careerTimeline.style.setProperty('--timeline-progress', lineProgress.toFixed(4));
     careerTimeline.style.setProperty('--timeline-line-start', `${Math.max(firstNode - timelineRect.top, 0).toFixed(1)}px`);
@@ -255,32 +255,14 @@
 
     let closestIndex = -1;
     let closestDistance = Infinity;
-    const revealStart = innerHeight * 0.94;
-    const revealDistance = Math.max(innerHeight * 0.34, 220);
-
     careerItems.forEach((item, index) => {
-      const nodeCenter = nodeCenters[index];
-      const rawProgress = clamp((revealStart - nodeCenter) / revealDistance);
-      const easedProgress = 1 - Math.pow(1 - rawProgress, 3);
-      const direction = index % 2 === 0 ? 1 : -1;
-      const offsetX = direction * (1 - easedProgress) * 54;
-      const offsetY = (1 - easedProgress) * 18;
-
-      item.style.setProperty('--timeline-opacity', (0.12 + easedProgress * 0.88).toFixed(3));
-      item.style.setProperty('--timeline-x', `${offsetX.toFixed(2)}px`);
-      item.style.setProperty('--timeline-y', `${offsetY.toFixed(2)}px`);
-      item.style.setProperty('--timeline-scale', (0.975 + easedProgress * 0.025).toFixed(4));
-      item.style.setProperty('--timeline-node-scale', (0.35 + easedProgress * 0.65).toFixed(3));
-      item.classList.toggle('in-view', rawProgress > 0.02);
-      item.classList.toggle('is-past', nodeCenter <= focusY);
-
-      const distance = Math.abs(nodeCenter - focusY);
+      const distance = Math.abs(nodeCenters[index] - focusY);
+      item.classList.toggle('is-past', nodeCenters[index] <= focusY);
       if (distance < closestDistance) {
         closestDistance = distance;
         closestIndex = index;
       }
     });
-
     careerItems.forEach((item, index) => {
       item.classList.toggle('is-focused', index === closestIndex && closestDistance < innerHeight * 0.34);
     });
@@ -291,6 +273,23 @@
     scrollTicking = true;
     requestAnimationFrame(renderScrollEffects);
   };
+
+  careerDisclosures.forEach(disclosure => {
+    disclosure.addEventListener('toggle', () => {
+      if (disclosure.open) {
+        careerDisclosures.forEach(other => {
+          if (other !== disclosure) other.open = false;
+        });
+      }
+      disclosure.closest('.career-item')?.classList.toggle('is-expanded', disclosure.open);
+      requestAnimationFrame(() => {
+        requestScrollEffects();
+        if (disclosure.open && compactCareer.matches) {
+          disclosure.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  });
 
   addEventListener('scroll', requestScrollEffects, { passive: true });
   addEventListener('resize', requestScrollEffects, { passive: true });

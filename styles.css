@@ -189,3 +189,118 @@
   .js .career-card,.js .career-date{opacity:1;transform:none}
   .career-card,.career-date,.career-node,.stack-card,.stack-card::before,.feature-list li,.story-points article{transition:none!important}
 }
+
+/* Progressive disclosure, Sentinel storytelling, and mobile content density. */
+@media screen {
+  .sentinel-section{grid-template-columns:1fr;align-items:start;gap:46px}
+  .sentinel-copy{max-width:none}
+  .sentinel-copy h2{margin-bottom:8px}
+  .project-kicker{max-width:790px;margin-top:12px;color:var(--text);font-size:clamp(1.18rem,2.2vw,1.65rem);font-weight:650;line-height:1.42;letter-spacing:-.025em}
+  .project-lead{max-width:900px;margin-top:16px;font-size:1.06rem;line-height:1.75}
+  .project-lead strong{color:var(--cyan)}
+  .sentinel-story{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+  .sentinel-story article{padding:19px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--surface-glass),color-mix(in srgb,var(--surface-2) 52%,transparent))}
+  .sentinel-story span,.tenure-title small{display:block;color:var(--cyan);font:700 9px var(--mono);letter-spacing:.09em;text-transform:uppercase}
+  .sentinel-story strong{display:block;margin-top:11px;font-size:1.06rem}
+  .sentinel-story p{margin-top:8px;color:var(--text-soft);font-size:.88rem;line-height:1.6}
+  .sentinel-proof{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:12px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--line)}
+  .sentinel-proof div{padding:18px 20px;background:var(--surface-glass)}
+  .sentinel-proof strong{display:block;color:var(--cyan);font-size:clamp(1.45rem,3vw,2.35rem);letter-spacing:-.055em;line-height:1}
+  .sentinel-proof span{display:block;margin-top:7px;color:var(--muted);font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .sentinel-depth{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--surface) 58%,transparent)}
+  .sentinel-depth summary,.career-summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .sentinel-depth summary::-webkit-details-marker,.career-summary::-webkit-details-marker{display:none}
+  .sentinel-depth summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;color:var(--text);font-size:.9rem;font-weight:700}
+  .sentinel-depth summary b{color:var(--cyan);font:700 9px var(--mono);text-transform:uppercase}
+  .sentinel-depth summary b::after{content:" +"}
+  .sentinel-depth[open] summary{border-bottom:1px solid var(--line)}
+  .sentinel-depth[open] summary b::after{content:" −"}
+  .sentinel-depth .feature-list{margin:0;padding:4px 16px 14px}
+  .product-window{width:min(1000px,100%);justify-self:center;rotate:0}
+
+  .career-item,.career-item.in-view{min-height:0;padding-bottom:30px}
+  .career-date{padding-top:23px;opacity:1;transform:none}
+  .career-node{margin-top:25px;transform:none}
+  .career-card{padding:0;overflow:visible;opacity:1;transform:none}
+  .career-card[open]{border-color:color-mix(in srgb,var(--cyan) 46%,var(--line));box-shadow:0 22px 65px color-mix(in srgb,var(--cyan) 10%,transparent)}
+  .career-summary{position:relative;padding:20px 22px}
+  .career-summary:focus-visible{outline:2px solid var(--cyan);outline-offset:4px;border-radius:18px}
+  .career-summary .career-head{align-items:start}
+  .career-action{display:inline-flex;align-items:center;gap:8px;margin-top:14px;color:var(--cyan);font:700 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .career-action i{display:grid;place-items:center;width:20px;height:20px;border:1px solid color-mix(in srgb,var(--cyan) 42%,var(--line));border-radius:50%;font-style:normal;font-size:14px;transition:rotate .25s ease,background .25s ease}
+  .close-label{display:none}
+  .career-card[open] .view-label{display:none}
+  .career-card[open] .close-label{display:inline}
+  .career-card[open] .career-action i{rotate:45deg;background:color-mix(in srgb,var(--cyan) 12%,transparent)}
+  .career-panel{padding:20px 22px 22px;border-top:1px solid var(--line)}
+  .career-panel>p{color:var(--text-soft);font-size:.94rem;line-height:1.72}
+  .tenure-feature{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:14px;background:color-mix(in srgb,var(--bg-elevated) 72%,transparent)}
+  .tenure-title h4{margin:5px 0 0;color:var(--text);font-size:1.05rem;line-height:1.3;letter-spacing:-.02em}
+  .tenure-feature>p{margin-top:10px;color:var(--text-soft);font-size:.88rem}
+  .tenure-highlights{display:grid;gap:0;margin-top:16px;border-top:1px solid var(--line)}
+  .tenure-highlights>div{display:grid;grid-template-columns:125px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .tenure-highlights strong{font-size:.82rem}
+  .tenure-highlights span{color:var(--text-soft);font-size:.82rem;line-height:1.55}
+  .delivery-loop{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .delivery-loop span{padding:5px 8px;border:1px solid var(--line);border-radius:7px;color:var(--cyan);font:700 8px var(--mono);text-transform:uppercase}
+  .delivery-loop i{color:var(--muted);font-style:normal}
+  .inline-link{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--cyan);font-size:.88rem;font-weight:700;text-decoration:none}
+  .inline-link:hover{text-decoration:underline}
+}
+
+@media screen and (max-width:900px){
+  .sentinel-story{grid-template-columns:1fr}
+  .career-item,.career-item.in-view{padding-bottom:22px}
+  .career-date{padding-top:0}
+  .career-node{margin-top:1px}
+  .career-card{margin-left:15px!important}
+  .career-summary{padding:18px}
+  .career-panel{padding:18px}
+}
+
+@media screen and (max-width:720px){
+  :root{--section:4.25rem}
+  .hero{min-height:auto;padding-top:calc(var(--header-h) + 58px)}
+  .section-heading{margin-bottom:30px}
+  .section-heading h2{font-size:clamp(2.25rem,11vw,3.5rem)}
+  .capability-grid,.stack-grid{display:flex;gap:12px;margin-inline:-14px;padding:2px 34px 18px 14px;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scroll-padding-inline:14px;scrollbar-width:none}
+  .capability-grid::-webkit-scrollbar,.stack-grid::-webkit-scrollbar{display:none}
+  .capability-card,.stack-card{flex:0 0 min(82vw,320px);scroll-snap-align:start}
+  .capability-card{min-height:260px}
+  .capability-card h3{margin-top:52px}
+  .stack-card{min-height:225px}
+  .sentinel-section{gap:30px}
+  .sentinel-copy h2{font-size:4.25rem}
+  .project-kicker{font-size:1.18rem}
+  .project-lead{font-size:.98rem}
+  .sentinel-story{gap:9px;margin-top:24px}
+  .sentinel-story article{padding:16px}
+  .sentinel-proof{grid-template-columns:1fr}
+  .sentinel-proof div{display:grid;grid-template-columns:90px 1fr;align-items:center;gap:12px;padding:14px 16px}
+  .sentinel-proof span{margin-top:0}
+  .sentinel-depth summary{align-items:flex-start}
+  .sentinel-depth summary b{white-space:nowrap}
+  .chart-card{display:none}
+  .failure-row{margin-top:10px}
+  .career-timeline{padding-top:0}
+  .career-summary{padding:16px}
+  .career-summary .career-head{display:grid;gap:5px}
+  .career-summary .career-head b{margin-top:0}
+  .career-panel{padding:16px}
+  .tenure-feature{padding:15px}
+  .tenure-highlights>div{grid-template-columns:1fr;gap:4px}
+  .delivery-loop i{display:none}
+  .career-card .tag-row{margin-top:16px}
+  .education-card{padding:20px}
+  .education-card h2{font-size:2rem}
+}
+
+@media screen and (prefers-reduced-motion:reduce){
+  .career-action i{transition:none}
+}
+
+@media print{
+  .career-card>summary~*{display:block!important}
+  .career-action,.sentinel-depth summary b{display:none!important}
+  .sentinel-depth .feature-list{display:block!important}
+}
