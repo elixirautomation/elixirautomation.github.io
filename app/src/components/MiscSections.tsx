@@ -1,4 +1,4 @@
-import { ArrowUpIcon, GitHubIcon, LinkedInIcon } from './Icons';
+import { ArrowUpIcon, GitHubIcon, LinkedInIcon, PhoneIcon } from './Icons';
 
 export function EducationSection() {
   return (
@@ -29,7 +29,14 @@ export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
           <a className="button button-light" href="mailto:abhilash04sharma@gmail.com">
             abhilash04sharma@gmail.com
           </a>
-          <button className="button button-ghost" type="button" onClick={onCopyEmail}>
+          <a className="button button-ghost contact-phone" href="tel:+919814606102">
+            <PhoneIcon />
+            <span className="flag" aria-hidden="true">
+              🇮🇳
+            </span>
+            +91-9814606102
+          </a>
+          <button className="button button-ghost contact-copy" type="button" onClick={onCopyEmail}>
             Copy email
           </button>
         </div>

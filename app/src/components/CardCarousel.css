@@ -10,16 +10,34 @@
  * the front card. Everything below re-establishes an opaque, clipped surface.
  */
 .card-carousel-shell {
+  /*
+   * The `cards` effect fans the stacked slides to the RIGHT (perSlideOffset per
+   * slide), so centring only the front card leaves the stack running off the
+   * right edge. Reserving the fan width on the right, plus an equal gutter on
+   * both sides, keeps the whole deck inside the viewport with even margins.
+   */
+  --stack-fan: 28px;
+  --carousel-gutter: 6px;
+
   display: grid;
   justify-items: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding-inline: var(--carousel-gutter) calc(var(--stack-fan) + var(--carousel-gutter));
+  /* Clip the 3D fan at its reserved box, not at the viewport/document. */
+  overflow-x: clip;
 }
 
 .card-carousel {
   width: 100%;
-  max-width: 340px;
+  max-width: min(340px, 100%);
+  min-width: 0;
   margin-inline: auto;
   padding-block: 10px 40px;
   overflow: visible;
+  /* Vertical page gestures pass through; horizontal gestures belong to Swiper. */
+  touch-action: pan-y;
 }
 
 .card-carousel .swiper-wrapper {
@@ -40,8 +58,14 @@
 .card-carousel-slide .capability-card,
 .card-carousel-slide .stack-card {
   height: 100%;
-  min-height: 310px;
+  /*
+   * Kept modest and uniform so all four cards match height (the cards effect
+   * sizes the deck from the slides), while removing the dead space the desktop
+   * layout intentionally leaves above the title.
+   */
+  min-height: 250px;
   margin: 0;
+  padding: 20px;
   border-radius: var(--radius);
   /* Opaque gradient (no `transparent` stops) so stacked text cannot bleed through. */
   background: linear-gradient(150deg, var(--surface-2), var(--surface) 62%);
@@ -49,6 +73,46 @@
   box-shadow: none;
   /* The slide element draws the visible border; keep the box size identical. */
   border-color: transparent;
+}
+
+/* Compact the capability card's vertical rhythm: desktop pushes the title down
+   by 70px to sit under the index, which is wasted height on a phone. */
+.card-carousel-slide .capability-card h3 {
+  margin-top: 26px;
+  font-size: 1.2rem;
+  line-height: 1.24;
+}
+
+.card-carousel-slide .capability-card p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.card-carousel-slide .capability-card ul {
+  margin-top: 16px;
+}
+
+.card-carousel-slide .card-icon {
+  top: 16px;
+  right: 18px;
+  font-size: 20px;
+}
+
+.card-carousel-slide .stack-card h3 {
+  margin-top: 6px;
+  font-size: 1.2rem;
+}
+
+.card-carousel-slide .stack-card ul {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+/* Square tiles carry over to the carousel; aspect-ratio drives the height, so
+   the shared 250px floor above must not also apply here. */
+.card-carousel-slide .stack-card {
+  aspect-ratio: 1;
+  min-height: 0;
 }
 
 /* The ambient radial glow on capability cards reads as haze when stacked. */
