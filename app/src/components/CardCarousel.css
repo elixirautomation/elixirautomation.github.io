@@ -10,8 +10,18 @@
  * the front card. Everything below re-establishes an opaque, clipped surface.
  */
 .card-carousel-shell {
+  /*
+   * The `cards` effect fans the stacked slides to the RIGHT (perSlideOffset per
+   * slide), so centring only the front card leaves the stack running off the
+   * right edge. Reserving the fan width on the right, plus an equal gutter on
+   * both sides, keeps the whole deck inside the viewport with even margins.
+   */
+  --stack-fan: 28px;
+  --carousel-gutter: 6px;
+
   display: grid;
   justify-items: center;
+  padding-inline: var(--carousel-gutter) calc(var(--stack-fan) + var(--carousel-gutter));
 }
 
 .card-carousel {
