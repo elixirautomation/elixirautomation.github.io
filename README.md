@@ -7,10 +7,11 @@ Portfolio for Abhilash Sharma, built with React, TypeScript, and Vite in a Yarn 
 Every command runs from the repository root — there is no need to `cd` into `app/`.
 
 ```bash
-corepack enable   # one-time: provisions Yarn 4 from the "packageManager" field
 yarn install
 yarn dev
 ```
+
+Yarn 4 is vendored at `.yarn/releases/yarn-4.12.0.cjs` and pinned via `yarnPath`, so a plain `yarn` works even if an older global Yarn (for example Homebrew's Yarn 1.x) comes first on your `PATH` — Yarn 1 reads `yarnPath` and delegates to Yarn 4. Corepack works too, but is not required.
 
 Open the URL Vite prints (typically [http://localhost:5173](http://localhost:5173)).
 
@@ -34,7 +35,8 @@ Each root script delegates into the `@portfolio/app` workspace, so the app can b
 ## Structure
 
 - `package.json` — workspace root: Yarn 4 (`packageManager`), workspace list, and all delegating scripts
-- `.yarnrc.yml` — Yarn config (`node-modules` linker)
+- `.yarnrc.yml` — Yarn config (`node-modules` linker, vendored `yarnPath`)
+- `.yarn/releases/` — the pinned Yarn 4 binary, committed so any Yarn on `PATH` delegates to the right version
 - `app/` — the Vite + React + TypeScript application (`@portfolio/app`)
   - `src/content/` — typed content data (career roles, capability/stack cards, Sentinel story) kept separate from presentation
   - `src/components/` — presentational and section components, including the shared `CardCarousel` used by both the capability and technology-stack sections

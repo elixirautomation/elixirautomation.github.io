@@ -1,20 +1,23 @@
 # Dependencies (hoisted to the repo root by the Yarn workspace)
 node_modules/
+app/node_modules/
 
 # Build output
 dist/
 dist-ssr/
 *.tsbuildinfo
 
-# Yarn (Corepack-provisioned; nothing vendored)
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
+# Yarn 4: keep the vendored release, ignore local state and cache
+.yarn/install-state.gz
+.yarn/build-state.yml
+.yarn/cache/
+.yarn/unplugged/
 .pnp.*
 .yarn-integrity
 
 # Competing lockfile — this project uses yarn.lock
 package-lock.json
+app/package-lock.json
 
 # Logs
 logs
@@ -25,6 +28,7 @@ yarn-error.log*
 
 # Local caches and tooling
 .vite/
+node_modules/.vite/
 .playwright-mcp/
 
 # Editor / OS
