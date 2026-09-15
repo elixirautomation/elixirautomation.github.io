@@ -120,7 +120,19 @@
   .career-item.is-past .career-node,.career-item.current .career-node{border-color:var(--cyan);background:color-mix(in srgb,var(--cyan) 12%,var(--bg))}
   .career-item.is-past .career-node::after,.career-item.current .career-node::after{background:var(--cyan)}
 
-  .stack-section{border-top:1px solid var(--line)}.stack-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.stack-card{padding:24px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,var(--surface-glass),color-mix(in srgb,var(--surface-2) 45%,transparent))}.stack-card .stack-eyebrow{color:var(--cyan);font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}.stack-card h3{margin-top:8px;font-size:1.35rem}.stack-card ul{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;list-style:none}.stack-card li{padding:6px 9px;border:1px solid var(--line);border-radius:8px;color:var(--text-soft);background:var(--surface);font-size:.82rem}
+  .stack-section{border-top:1px solid var(--line)}
+  /*
+   * Square tiles. `auto-fit` keeps each tile in a ~240-300px band (4 across on
+   * wide screens, 3 mid) -- forcing two columns would make a 1:1 tile ~470px
+   * tall with very little content in it.
+   */
+  .stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .stack-card{display:flex;flex-direction:column;aspect-ratio:1;padding:20px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,var(--surface-glass),color-mix(in srgb,var(--surface-2) 45%,transparent))}
+  .stack-card .stack-eyebrow{color:var(--cyan);font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .stack-card h3{margin-top:7px;font-size:1.16rem;line-height:1.24}
+  /* `margin-top:auto` anchors the tool pills to the bottom of the square. */
+  .stack-card ul{display:flex;flex-wrap:wrap;align-content:flex-end;gap:6px;margin-top:auto;padding-top:14px;list-style:none}
+  .stack-card li{padding:5px 8px;border:1px solid var(--line);border-radius:8px;color:var(--text-soft);background:var(--surface);font-size:.76rem}
   .education-section{padding-top:0}.education-card{padding:32px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(110deg,color-mix(in srgb,var(--cyan) 8%,var(--surface)),var(--surface))}.education-card .eyebrow{margin-top:0}.education-card h2{margin-top:10px;font-size:clamp(2rem,4vw,3.6rem)}.education-card>p:not(.eyebrow){margin-top:9px;color:var(--text-soft)}.education-card>div{display:flex;justify-content:space-between;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font:11px var(--mono)}.education-card>div strong{color:var(--cyan)}
 
   .contact-section{position:relative;overflow:hidden;margin-top:var(--section);padding-block:clamp(5rem,10vw,9rem);background:linear-gradient(135deg,#0b5f62,#173f72 58%,#40266c);color:#f0fdff}.contact-inner{position:relative;z-index:1}.contact-inner .eyebrow{margin-top:0;color:#a7f3d0}.contact-inner h2{max-width:950px;margin-top:16px;font-size:clamp(2.8rem,6vw,6.4rem)}.contact-inner>p:not(.eyebrow){margin-top:22px;color:rgba(240,253,255,.72);font-size:1.1rem}.contact-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}.button-light{background:#f0fdff;color:#0b2630}.button-ghost{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff}.contact-orb{position:absolute;border-radius:50%;filter:blur(1px);opacity:.22}.orb-one{width:34rem;height:34rem;right:-12rem;top:-14rem;border:1px solid #fff;box-shadow:inset 0 0 80px rgba(255,255,255,.12)}.orb-two{width:18rem;height:18rem;right:16%;bottom:-11rem;background:#c4b5fd;filter:blur(70px)}
@@ -258,7 +270,8 @@
   .capability-card h3{margin-top:8px!important;font-size:13pt}
   .capability-card p{margin-top:8px;font-size:10pt}
   .capability-card ul{margin-top:12px}
-  .stack-card{min-height:0!important;flex:none!important;padding:16px!important;break-inside:avoid}
+  .stack-card{min-height:0!important;flex:none!important;aspect-ratio:auto!important;padding:16px!important;break-inside:avoid}
+  .stack-card ul{margin-top:12px;padding-top:0}
   .stack-card h3{margin-top:6px!important;font-size:13pt}
   .stack-card ul{margin-top:12px}
   .sentinel-section{grid-template-columns:1fr;gap:16px}

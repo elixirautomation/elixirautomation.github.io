@@ -86,7 +86,15 @@
 }
 
 .card-carousel-slide .stack-card ul {
-  margin-top: 14px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+/* Square tiles carry over to the carousel; aspect-ratio drives the height, so
+   the shared 250px floor above must not also apply here. */
+.card-carousel-slide .stack-card {
+  aspect-ratio: 1;
+  min-height: 0;
 }
 
 /* The ambient radial glow on capability cards reads as haze when stacked. */
