@@ -29,5 +29,5 @@ export const commandNavigate: CommandEntry[] = [
 
 export const commandActions: CommandEntry[] = [
   { icon: '◐', label: 'Switch color theme', shortcut: 'D', action: 'theme' },
-  { icon: '⇩', label: 'Print profile', shortcut: 'P', action: 'print' },
+  { icon: '⇩', label: 'Save profile as PDF', shortcut: 'P', action: 'print' },
 ];

@@ -1,6 +1,7 @@
 import { useRotatingText } from '../hooks/useRotatingText';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { HeroMetrics } from './HeroMetrics';
+import { DownloadIcon } from './Icons';
 
 const ROTATING_WORDS = ['observable.', 'explainable.', 'resilient.', 'scalable.'];
 const AGENT_LOGS = [
@@ -48,8 +49,9 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
           <a className="button button-secondary" href="#contact">
             Start a conversation
           </a>
-          <button className="text-button" type="button" onClick={onPrint}>
-            Print profile
+          <button className="button button-quiet" type="button" onClick={onPrint}>
+            <DownloadIcon />
+            Save as PDF
           </button>
         </div>
         <HeroMetrics />

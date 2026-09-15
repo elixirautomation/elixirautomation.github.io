@@ -1,3 +1,5 @@
+import { ArrowUpIcon, GitHubIcon, LinkedInIcon } from './Icons';
+
 export function EducationSection() {
   return (
     <section className="section section-shell education-section" aria-labelledby="education-title">
@@ -32,11 +34,18 @@ export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
           </button>
         </div>
         <div className="social-links">
-          <a href="https://www.linkedin.com/in/abhilash-sharma-profile" target="_blank" rel="noreferrer">
-            LinkedIn ↗
+          <a
+            className="social-link"
+            href="https://www.linkedin.com/in/abhilash-sharma-profile"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <LinkedInIcon />
+            <span>LinkedIn</span>
           </a>
-          <a href="https://github.com/elixirautomation" target="_blank" rel="noreferrer">
-            GitHub ↗
+          <a className="social-link" href="https://github.com/elixirautomation" target="_blank" rel="noreferrer">
+            <GitHubIcon />
+            <span>GitHub</span>
           </a>
         </div>
       </div>
@@ -47,9 +56,12 @@ export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer section-shell">
-      <span>© {new Date().getFullYear()} Abhilash Sharma</span>
-      <span>Designed as a static, accessible system.</span>
-      <a href="#home">Back to top ↑</a>
+      <span className="footer-copy">© {new Date().getFullYear()} Abhilash Sharma</span>
+      <span className="footer-note">Designed as a static, accessible system.</span>
+      <a className="back-to-top" href="#home">
+        <span>Back to top</span>
+        <ArrowUpIcon />
+      </a>
     </footer>
   );
 }
