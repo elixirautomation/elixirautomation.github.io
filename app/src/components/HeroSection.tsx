@@ -1,4 +1,5 @@
 import { useRotatingText } from '../hooks/useRotatingText';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 const ROTATING_WORDS = ['observable.', 'explainable.', 'resilient.', 'scalable.'];
 const AGENT_LOGS = [
@@ -8,9 +9,18 @@ const AGENT_LOGS = [
   'agentcore.runtime → tool → evidence',
 ];
 
+/** Connection curves between the outer nodes and the core, shared by the lines and the pulses. */
+const SIGNAL_PATHS = [
+  'M132 176C205 170 238 210 310 193',
+  'M516 154C474 198 462 243 427 310',
+  'M510 458C451 450 396 431 310 427',
+  'M111 452C155 401 169 361 193 310',
+];
+
 export function HeroSection({ onPrint }: { onPrint: () => void }) {
   const rotatingWord = useRotatingText(ROTATING_WORDS, 2800);
   const agentLog = useRotatingText(AGENT_LOGS, 2400);
+  const reducedMotion = usePrefersReducedMotion();
 
   return (
     <section className="hero section-shell" id="home" aria-labelledby="hero-title">
@@ -60,8 +70,12 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
 
       <div className="agent-stage reveal" aria-label="Animated map connecting AI agents, test platforms, and reliability systems">
         <div className="stage-grid" aria-hidden="true"></div>
-        <svg className="agent-map" viewBox="0 0 620 620" role="img" aria-labelledby="agent-map-title">
-          <title id="agent-map-title">Agentic engineering capability map</title>
+        <svg
+          className="agent-map"
+          viewBox="0 0 620 620"
+          role="img"
+          aria-label="Agentic engineering capability map"
+        >
           <defs>
             <linearGradient id="line-gradient" x1="0" y1="0" x2="1" y2="1">
               <stop stopColor="#5eead4" />
@@ -81,11 +95,30 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
             <path d="M310 193 132 176M427 310 516 154M310 427 510 458M193 310 111 452M310 193 468 245M427 310 370 522M310 427 166 508M193 310 196 98" />
           </g>
           <g className="signal-paths" fill="none" stroke="url(#line-gradient)">
-            <path d="M132 176C205 170 238 210 310 193" />
-            <path d="M516 154C474 198 462 243 427 310" />
-            <path d="M510 458C451 450 396 431 310 427" />
-            <path d="M111 452C155 401 169 361 193 310" />
+            {SIGNAL_PATHS.map((path) => (
+              <path key={path} d={path} />
+            ))}
           </g>
+          {/*
+            Travelling pulses along each connection. Rendered only when motion is
+            allowed: SMIL <animateMotion> cannot be disabled from CSS, so the
+            reduced-motion decision has to happen here in the component.
+          */}
+          {!reducedMotion && (
+            <g className="signal-pulses" aria-hidden="true">
+              {SIGNAL_PATHS.map((path, index) => (
+                <circle key={path} className="signal-pulse" r="3.5">
+                  <animateMotion
+                    dur={`${3.2 + index * 0.45}s`}
+                    repeatCount="indefinite"
+                    path={path}
+                    begin={`${index * 0.6}s`}
+                  />
+                </circle>
+              ))}
+            </g>
+          )}
+          {!reducedMotion && <circle className="core-pulse" cx="310" cy="310" r="72" aria-hidden="true" />}
           <g className="core-node" filter="url(#soft-glow)">
             <circle cx="310" cy="310" r="72" />
             <text x="310" y="299">

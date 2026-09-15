@@ -1,0 +1,49 @@
+/*
+ * Mobile-only styles for the Sentinel dashboard panel deck. On desktop the
+ * panels render as plain stacked divs and none of this applies.
+ *
+ * Uniform-size pagination bullets with colour-only transitions, for the same
+ * reason as CardCarousel: animating bullet width animates layout and can leave
+ * a stalled intermediate state.
+ */
+.dash-carousel {
+  --swiper-pagination-bottom: 0px;
+  --swiper-pagination-color: var(--cyan);
+  --swiper-pagination-bullet-width: 18px;
+  --swiper-pagination-bullet-height: 3px;
+  --swiper-pagination-bullet-border-radius: 999px;
+  --swiper-pagination-bullet-horizontal-gap: 3px;
+  --swiper-pagination-bullet-inactive-color: var(--muted);
+  --swiper-pagination-bullet-inactive-opacity: 0.3;
+
+  width: 100%;
+  margin-top: 16px;
+  padding-bottom: 22px;
+}
+
+.dash-carousel .swiper-pagination-bullet {
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.dash-carousel-slide {
+  height: auto;
+}
+
+.dash-carousel-label {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font: 600 8px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* The chart is hidden globally at this width; inside the deck it is a panel. */
+.dash-carousel-slide .chart-card {
+  display: block;
+  margin-top: 0;
+}
+
+.dash-carousel-slide .dash-metrics,
+.dash-carousel-slide .failure-row {
+  margin-top: 0;
+}

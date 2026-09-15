@@ -71,30 +71,28 @@
   border-color: color-mix(in srgb, var(--cyan) 34%, var(--line));
 }
 
-/* Pagination bullets, themed to the design tokens. */
-.card-carousel .swiper-pagination {
-  bottom: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  line-height: 1;
+/*
+ * Pagination bullets, themed via Swiper's own CSS variables.
+ *
+ * Every bullet is the SAME size and only its colour/opacity changes. An earlier
+ * version widened the active bullet and transitioned `width`, which animates
+ * layout: during the rewind from the last slide the class churn could leave a
+ * bullet stalled at the active width with the inactive colour already applied,
+ * showing as a stray pale pill. Colour-only transitions cannot do that.
+ */
+.card-carousel {
+  --swiper-pagination-bottom: 4px;
+  --swiper-pagination-color: var(--cyan);
+  --swiper-pagination-bullet-width: 20px;
+  --swiper-pagination-bullet-height: 4px;
+  --swiper-pagination-bullet-border-radius: 999px;
+  --swiper-pagination-bullet-horizontal-gap: 3px;
+  --swiper-pagination-bullet-inactive-color: var(--muted);
+  --swiper-pagination-bullet-inactive-opacity: 0.32;
 }
 
 .card-carousel .swiper-pagination-bullet {
-  width: 7px;
-  height: 7px;
-  margin: 0 !important;
-  border-radius: 999px;
-  background: var(--muted);
-  opacity: 0.5;
-  transition: width 0.3s ease, background 0.3s ease, opacity 0.3s ease;
-}
-
-.card-carousel .swiper-pagination-bullet-active {
-  width: 22px;
-  background: var(--cyan);
-  opacity: 1;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 .card-carousel-hint {
