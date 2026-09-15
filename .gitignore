@@ -30,6 +30,7 @@ yarn-error.log*
 .vite/
 node_modules/.vite/
 .playwright-mcp/
+.vercel/
 
 # Editor / OS
 .vscode/*

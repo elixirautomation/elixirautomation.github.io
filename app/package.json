@@ -13,6 +13,7 @@
     "clean": "rimraf dist node_modules/.vite tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "swiper": "^12.1.2"

@@ -7,6 +7,7 @@ import { ExperienceSection } from './components/ExperienceSection';
 import { StackSection } from './components/StackSection';
 import { EducationSection, ContactSection, SiteFooter } from './components/MiscSections';
 import { CommandPalette } from './components/CommandPalette';
+import { VercelAnalytics } from './components/VercelAnalytics';
 import { useTheme } from './hooks/useTheme';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { usePointerEffects } from './hooks/usePointerEffects';
@@ -79,6 +80,8 @@ export default function App() {
       <div className={`toast${toastMessage ? ' show' : ''}`} role="status" aria-live="polite">
         {toastMessage}
       </div>
+
+      <VercelAnalytics />
     </>
   );
 }

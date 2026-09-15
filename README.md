@@ -44,6 +44,7 @@ Each root script delegates into the `@portfolio/app` workspace, so the app can b
   - `src/styles/global.css` — the design system (tokens, layout, animation, print rules)
   - `public/` — static assets served as-is (favicon, OG card, manifest, robots.txt, sitemap.xml, `.nojekyll`)
 - `.github/workflows/deploy.yml` — installs, lints, audits, builds, and deploys `app/dist` on every push to `master`
+- `vercel.json` — build, caching, and header configuration for the Vercel deployment
 
 ## Architecture
 
@@ -53,7 +54,29 @@ Content is modeled as typed data (`src/content/*.ts`) rather than duplicated JSX
 
 ## Deployment
 
-GitHub Actions builds the app on every push to `master` and publishes `app/dist` to GitHub Pages using the official `actions/deploy-pages` action. The repository's Pages source must be set to **GitHub Actions** (Settings → Pages → Source); it no longer serves static files directly from the branch root.
+The site is deployed twice from the same `master` branch.
+
+### GitHub Pages (primary)
+
+GitHub Actions builds the app on every push to `master` and publishes `app/dist` using the official `actions/deploy-pages` action. The repository's Pages source must be set to **GitHub Actions** (Settings → Pages → Source); it no longer serves static files directly from the branch root.
+
+### Vercel
+
+`vercel.json` at the repository root makes the Vercel build reproducible from source rather than dashboard settings:
+
+- `installCommand`: `yarn install --immutable`
+- `buildCommand`: `yarn build`
+- `outputDirectory`: `app/dist`
+- Hashed assets under `/assets/` get a one-year immutable cache; `index.html` is `no-cache` so a deploy never serves a stale document against new asset hashes
+- Baseline security headers (`X-Content-Type-Options`, `Referrer-Policy`, `X-Frame-Options`)
+
+**The Vercel project's Root Directory must be the repository root, not `app/`.** Yarn's lockfile and `.yarnrc.yml` live at the root, so installing from inside `app/` would not resolve the workspace. Vercel only reads a `vercel.json` located in the configured Root Directory.
+
+`index.html` sets its canonical URL to the GitHub Pages origin, so the Vercel deployment does not compete with it in search results.
+
+### Analytics
+
+Vercel Web Analytics is mounted through `app/src/components/VercelAnalytics.tsx` using the `@vercel/analytics/react` entrypoint (**not** `/next`, which requires `next/navigation`). It is skipped when the host ends in `github.io`, because the tracking script is served by Vercel's edge and would otherwise 404 on every Pages visit.
 
 ## Accessibility and performance
 
