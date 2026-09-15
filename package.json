@@ -1,0 +1,26 @@
+{
+  "name": "elixirautomation-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "yarn@4.12.0",
+  "workspaces": [
+    "app"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "yarn workspace @portfolio/app dev",
+    "build": "yarn workspace @portfolio/app build",
+    "preview": "yarn workspace @portfolio/app preview",
+    "typecheck": "yarn workspace @portfolio/app typecheck",
+    "lint": "yarn typecheck && yarn workspace @portfolio/app lint",
+    "lint:fix": "yarn workspace @portfolio/app lint --fix",
+    "check": "yarn typecheck && yarn workspace @portfolio/app lint",
+    "audit": "yarn npm audit --all --severity high",
+    "clean": "yarn workspace @portfolio/app clean",
+    "clean:build": "yarn clean && yarn build"
+  }
+}

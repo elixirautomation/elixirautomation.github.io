@@ -1,37 +1,62 @@
 # elixirautomation.github.io
 
-Static portfolio for Abhilash Sharma, built as dependency-free HTML, CSS, and JavaScript for GitHub Pages.
+Portfolio for Abhilash Sharma, built with React, TypeScript, and Vite in a Yarn workspace, deployed to GitHub Pages via GitHub Actions.
 
-## Local preview
+## Local development
+
+Every command runs from the repository root — there is no need to `cd` into `app/`.
 
 ```bash
-python3 -m http.server 8000
+corepack enable   # one-time: provisions Yarn 4 from the "packageManager" field
+yarn install
+yarn dev
 ```
 
-Open [http://localhost:8000](http://localhost:8000).
+Open the URL Vite prints (typically [http://localhost:5173](http://localhost:5173)).
+
+## Root scripts
+
+| Script | Purpose |
+| --- | --- |
+| `yarn dev` | Start the Vite dev server |
+| `yarn build` | Type check and build production output to `app/dist` |
+| `yarn preview` | Serve the production build locally |
+| `yarn typecheck` | TypeScript project references, no emit |
+| `yarn lint` | Type check, then ESLint |
+| `yarn lint:fix` | ESLint with `--fix` |
+| `yarn check` | Type check + ESLint (CI-equivalent gate) |
+| `yarn audit` | Fail on high/critical dependency vulnerabilities |
+| `yarn clean` | Remove build output and caches |
+| `yarn clean:build` | Clean, then rebuild |
+
+Each root script delegates into the `@portfolio/app` workspace, so the app can be restructured without changing the commands used day to day.
 
 ## Structure
 
-- `index.html` — semantic portfolio content and SEO metadata
-- `styles.css` — responsive dark/light visual system, animation, and print rules
-- `script.js` — theme, command palette, reveal motion, counters, navigation, and accessibility interactions
-- `assets/favicon.svg` — site icon
-- `assets/og-card.svg` — social sharing image
-- `manifest.webmanifest` — install metadata
-- `robots.txt` and `sitemap.xml` — crawler metadata
+- `package.json` — workspace root: Yarn 4 (`packageManager`), workspace list, and all delegating scripts
+- `.yarnrc.yml` — Yarn config (`node-modules` linker)
+- `app/` — the Vite + React + TypeScript application (`@portfolio/app`)
+  - `src/content/` — typed content data (career roles, capability/stack cards, Sentinel story) kept separate from presentation
+  - `src/components/` — presentational and section components, including the shared `CardCarousel` used by both the capability and technology-stack sections
+  - `src/hooks/` — single-purpose hooks (theme, scroll reveal, career timeline progress, animated metrics, pointer effects, print handling, media queries)
+  - `src/styles/global.css` — the design system (tokens, layout, animation, print rules)
+  - `public/` — static assets served as-is (favicon, OG card, manifest, robots.txt, sitemap.xml, `.nojekyll`)
+- `.github/workflows/deploy.yml` — installs, lints, audits, builds, and deploys `app/dist` on every push to `master`
 
-## Architecture choice
+## Architecture
 
-The site intentionally uses platform-native HTML, CSS, and JavaScript. The visual system and interactions do not require a framework, so the published GitHub Page has no bundle, dependency installation, hydration, or build pipeline. If the portfolio later gains routed case studies, a CMS, or shared interactive components, the sections can be migrated incrementally to Vite and React without changing the content model or visual tokens.
+The site moved from a dependency-free static build to Vite + React + TypeScript to support the 3D card carousel (Swiper's `cards` effect) on mobile, where capability and technology-stack cards render as a swipeable stack with full text always visible instead of a tap-to-expand accordion. Desktop keeps the original grid layout.
+
+Content is modeled as typed data (`src/content/*.ts`) rather than duplicated JSX, so the same `CardCarousel` component renders both the "How I work" and "Technology constellation" sections — adding a new card set means adding data, not new carousel wiring.
 
 ## Deployment
 
-The repository is designed to publish directly from the default branch through GitHub Pages. No build step or package installation is required.
+GitHub Actions builds the app on every push to `master` and publishes `app/dist` to GitHub Pages using the official `actions/deploy-pages` action. The repository's Pages source must be set to **GitHub Actions** (Settings → Pages → Source); it no longer serves static files directly from the branch root.
 
 ## Accessibility and performance
 
 - Semantic landmarks and keyboard-accessible controls
 - Visible focus states and a skip link
-- `prefers-reduced-motion` support
-- Responsive navigation and layouts
-- No runtime dependencies or third-party JavaScript
+- `prefers-reduced-motion` support throughout, including the carousel
+- Responsive navigation, layouts, and card presentation
+- No inline secrets or third-party analytics
