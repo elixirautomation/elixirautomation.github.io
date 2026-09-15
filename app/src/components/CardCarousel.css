@@ -1,0 +1,116 @@
+/*
+ * Styles for `CardCarousel`'s mobile mode: Swiper's `cards` 3D effect.
+ * Desktop mode renders the existing `.capability-grid`/`.stack-grid` styles
+ * from `global.css` unchanged, so this file only covers the carousel.
+ *
+ * The `cards` effect stacks slides directly on top of one another, so the card
+ * surfaces MUST be fully opaque here. The grid variants in `global.css` use
+ * translucent `color-mix(..., transparent)` / `--surface-glass` backgrounds plus
+ * `backdrop-filter`, which would let the text of the cards behind bleed through
+ * the front card. Everything below re-establishes an opaque, clipped surface.
+ */
+.card-carousel-shell {
+  display: grid;
+  justify-items: center;
+}
+
+.card-carousel {
+  width: 100%;
+  max-width: 340px;
+  margin-inline: auto;
+  padding-block: 10px 40px;
+  overflow: visible;
+}
+
+.card-carousel .swiper-wrapper {
+  align-items: stretch;
+}
+
+.card-carousel-slide {
+  height: auto;
+  /* Opaque base + clipping: nothing from the stacked slides can show through. */
+  background: var(--surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+}
+
+/* Cards fill the slide and keep their full content visible; no collapsed state. */
+.card-carousel-slide .capability-card,
+.card-carousel-slide .stack-card {
+  height: 100%;
+  min-height: 310px;
+  margin: 0;
+  border-radius: var(--radius);
+  /* Opaque gradient (no `transparent` stops) so stacked text cannot bleed through. */
+  background: linear-gradient(150deg, var(--surface-2), var(--surface) 62%);
+  backdrop-filter: none;
+  box-shadow: none;
+  /* The slide element draws the visible border; keep the box size identical. */
+  border-color: transparent;
+}
+
+/* The ambient radial glow on capability cards reads as haze when stacked. */
+.card-carousel-slide .capability-card::after,
+.card-carousel-slide .stack-card::before {
+  display: none;
+}
+
+/*
+ * Depth cues: keep a constant 1px border on every slide (colour-only change on
+ * the active one) so promoting a card never changes its box size, and leave
+ * slide opacity to Swiper -- the cards effect sets it inline per stack position.
+ */
+.card-carousel-slide {
+  border: 1px solid var(--line);
+  transition: border-color 0.4s ease;
+}
+
+.card-carousel-slide.swiper-slide-active {
+  border-color: color-mix(in srgb, var(--cyan) 34%, var(--line));
+}
+
+/*
+ * Pagination bullets, themed via Swiper's own CSS variables.
+ *
+ * Every bullet is the SAME size and only its colour/opacity changes. An earlier
+ * version widened the active bullet and transitioned `width`, which animates
+ * layout: during the rewind from the last slide the class churn could leave a
+ * bullet stalled at the active width with the inactive colour already applied,
+ * showing as a stray pale pill. Colour-only transitions cannot do that.
+ */
+.card-carousel {
+  --swiper-pagination-bottom: 4px;
+  --swiper-pagination-color: var(--cyan);
+  --swiper-pagination-bullet-width: 20px;
+  --swiper-pagination-bullet-height: 4px;
+  --swiper-pagination-bullet-border-radius: 999px;
+  --swiper-pagination-bullet-horizontal-gap: 3px;
+  --swiper-pagination-bullet-inactive-color: var(--muted);
+  --swiper-pagination-bullet-inactive-opacity: 0.32;
+}
+
+.card-carousel .swiper-pagination-bullet {
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.card-carousel-hint {
+  margin-top: 2px;
+  color: var(--muted);
+  font: 600 9px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card-carousel-hint span {
+  margin-right: 6px;
+  color: var(--cyan);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-carousel-slide,
+  .card-carousel .swiper-pagination-bullet {
+    transition: none;
+  }
+}
