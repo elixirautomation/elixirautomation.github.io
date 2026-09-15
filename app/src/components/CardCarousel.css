@@ -1,0 +1,40 @@
+/*
+ * Styles for `CardCarousel`'s mobile mode: Swiper's `cards` 3D effect.
+ * Desktop mode renders the existing `.capability-grid`/`.stack-grid` styles
+ * from `global.css` unchanged, so this file only needs to size the carousel
+ * container and make sure each slide shows its full card face (no
+ * tap-to-reveal -- horizontal swiping changes which card is on top, and the
+ * current card's text is always fully visible).
+ */
+.card-carousel {
+  width: 100%;
+  max-width: 340px;
+  margin-inline: auto;
+  padding-block: 12px 28px;
+  overflow: visible;
+}
+
+.card-carousel .swiper-wrapper {
+  align-items: stretch;
+}
+
+.card-carousel-slide {
+  height: auto;
+  border-radius: var(--radius);
+}
+
+/* Cards fill the slide and keep their full content visible; no collapsed/summary state on mobile. */
+.card-carousel-slide .capability-card,
+.card-carousel-slide .stack-card {
+  height: 100%;
+  min-height: 300px;
+  margin: 0;
+}
+
+.card-carousel-slide .capability-card::after {
+  display: none;
+}
+
+.card-carousel .swiper-cards {
+  overflow: visible;
+}
