@@ -295,5 +295,50 @@
   addEventListener('resize', requestScrollEffects, { passive: true });
   renderScrollEffects();
 
+  // Disclosure grids: expanded on desktop, tap-and-reveal accordion on mobile.
+  const compactGrid = matchMedia('(max-width:720px)');
+  const disclosureGrids = [];
+  const setupDisclosureGrid = selector => {
+    const cards = $$(selector);
+    if (!cards.length) return;
+    disclosureGrids.push(cards);
+    cards.forEach(card => {
+      card.addEventListener('toggle', () => {
+        if (!compactGrid.matches) {
+          if (!card.open) card.open = true; // keep the grid expanded on desktop
+          return;
+        }
+        if (card.open) {
+          cards.forEach(other => { if (other !== card) other.open = false; });
+        }
+      });
+    });
+  };
+  const syncDisclosureGrids = () => {
+    disclosureGrids.forEach(cards => cards.forEach(card => { card.open = !compactGrid.matches; }));
+  };
+  setupDisclosureGrid('#work .capability-card');
+  setupDisclosureGrid('#stack .stack-card');
+  syncDisclosureGrids();
+  compactGrid.addEventListener ? compactGrid.addEventListener('change', syncDisclosureGrids) : compactGrid.addListener(syncDisclosureGrids);
+
+  // Expand every disclosure while printing so the PDF is complete, then restore state.
+  let printSnapshot = null;
+  const expandForPrint = () => {
+    const disclosures = $$('details');
+    printSnapshot = disclosures.map(el => ({ el, open: el.open, name: el.getAttribute('name') }));
+    disclosures.forEach(el => { el.removeAttribute('name'); el.open = true; });
+  };
+  const restoreAfterPrint = () => {
+    if (!printSnapshot) return;
+    printSnapshot.forEach(({ el, open, name }) => {
+      el.open = open;
+      if (name !== null) el.setAttribute('name', name);
+    });
+    printSnapshot = null;
+  };
+  addEventListener('beforeprint', expandForPrint);
+  addEventListener('afterprint', restoreAfterPrint);
+
   $('[data-year]').textContent = new Date().getFullYear();
 })();
