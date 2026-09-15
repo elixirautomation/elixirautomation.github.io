@@ -132,6 +132,9 @@
   .button-quiet{border-color:var(--line);background:transparent;color:var(--text-soft)}
   .button-quiet:hover{border-color:var(--line-strong);background:var(--surface-glass);color:var(--text)}
   .button-quiet .icon{width:16px;height:16px}
+  .contact-phone{gap:8px;font-variant-numeric:tabular-nums}
+  .contact-phone .icon{width:16px;height:16px}
+  .contact-phone .flag{font-size:15px;line-height:1}
 
   .site-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-block:26px;border-top:1px solid var(--line);color:var(--muted);font:11px var(--mono)}
   .site-footer .footer-note{color:var(--muted);opacity:.85}
@@ -274,7 +277,8 @@
   .contact-inner h2{font-size:18pt;color:var(--text)!important}
   .contact-inner>p:not(.eyebrow){color:var(--text-soft)!important}
   .contact-actions{margin-top:14px}
-  .button-light{background:#fff!important;color:var(--blue)!important;border:1px solid var(--line)!important;min-height:0;padding:6px 10px}
+  .button-light,.contact-phone{background:#fff!important;color:var(--blue)!important;border:1px solid var(--line)!important;min-height:0;padding:6px 10px}
+  .contact-copy{display:none!important}
   .site-footer{padding-block:12px;color:var(--muted)}
   a{color:var(--blue)}
   h1,h2,h3,h4{break-after:avoid}

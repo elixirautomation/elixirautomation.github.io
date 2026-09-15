@@ -40,8 +40,14 @@
 .card-carousel-slide .capability-card,
 .card-carousel-slide .stack-card {
   height: 100%;
-  min-height: 310px;
+  /*
+   * Kept modest and uniform so all four cards match height (the cards effect
+   * sizes the deck from the slides), while removing the dead space the desktop
+   * layout intentionally leaves above the title.
+   */
+  min-height: 250px;
   margin: 0;
+  padding: 20px;
   border-radius: var(--radius);
   /* Opaque gradient (no `transparent` stops) so stacked text cannot bleed through. */
   background: linear-gradient(150deg, var(--surface-2), var(--surface) 62%);
@@ -49,6 +55,38 @@
   box-shadow: none;
   /* The slide element draws the visible border; keep the box size identical. */
   border-color: transparent;
+}
+
+/* Compact the capability card's vertical rhythm: desktop pushes the title down
+   by 70px to sit under the index, which is wasted height on a phone. */
+.card-carousel-slide .capability-card h3 {
+  margin-top: 26px;
+  font-size: 1.2rem;
+  line-height: 1.24;
+}
+
+.card-carousel-slide .capability-card p {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.card-carousel-slide .capability-card ul {
+  margin-top: 16px;
+}
+
+.card-carousel-slide .card-icon {
+  top: 16px;
+  right: 18px;
+  font-size: 20px;
+}
+
+.card-carousel-slide .stack-card h3 {
+  margin-top: 6px;
+  font-size: 1.2rem;
+}
+
+.card-carousel-slide .stack-card ul {
+  margin-top: 14px;
 }
 
 /* The ambient radial glow on capability cards reads as haze when stacked. */
