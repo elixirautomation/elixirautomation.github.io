@@ -9,7 +9,6 @@ import { EducationSection, ContactSection, SiteFooter } from './components/MiscS
 import { CommandPalette } from './components/CommandPalette';
 import { useTheme } from './hooks/useTheme';
 import { useScrollReveal } from './hooks/useScrollReveal';
-import { useAnimatedMetrics } from './hooks/useAnimatedMetrics';
 import { usePointerEffects } from './hooks/usePointerEffects';
 import { useExpandDetailsForPrint } from './hooks/useExpandDetailsForPrint';
 import { useToast } from './hooks/useToast';
@@ -22,7 +21,6 @@ export default function App() {
   const [commandOpen, setCommandOpen] = useState(false);
 
   useScrollReveal();
-  useAnimatedMetrics();
   usePointerEffects();
   useExpandDetailsForPrint();
 

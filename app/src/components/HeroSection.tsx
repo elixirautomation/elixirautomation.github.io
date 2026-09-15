@@ -1,5 +1,6 @@
 import { useRotatingText } from '../hooks/useRotatingText';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { HeroMetrics } from './HeroMetrics';
 
 const ROTATING_WORDS = ['observable.', 'explainable.', 'resilient.', 'scalable.'];
 const AGENT_LOGS = [
@@ -30,7 +31,10 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
         </div>
         <p className="eyebrow">Quality engineering · AI engineering · reliability</p>
         <h1 id="hero-title">
-          I build systems that make engineering quality <span className="gradient-text">{rotatingWord}</span>
+          I build systems that make engineering quality{' '}
+          <span className="gradient-text text-swap" key={rotatingWord.cycle}>
+            {rotatingWord.text}
+          </span>
         </h1>
         <p className="hero-summary">
           Quality Engineer focused on AI-native platforms and production reliability, with 10+ years across software
@@ -48,24 +52,7 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
             Print profile
           </button>
         </div>
-        <div className="metric-row" aria-label="Career highlights">
-          <div className="metric">
-            <strong>10+</strong>
-            <span>years engineering</span>
-          </div>
-          <div className="metric">
-            <strong>3</strong>
-            <span>years building agents</span>
-          </div>
-          <div className="metric">
-            <strong>596K+</strong>
-            <span>test executions</span>
-          </div>
-          <div className="metric">
-            <strong>20K+</strong>
-            <span>test identities</span>
-          </div>
-        </div>
+        <HeroMetrics />
       </div>
 
       <div className="agent-stage reveal" aria-label="Animated map connecting AI agents, test platforms, and reliability systems">
@@ -174,7 +161,9 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
           </div>
           <div className="console-line">
             <span className="prompt">›</span>
-            <span>{agentLog}</span>
+            <span className="console-log text-swap" key={agentLog.cycle}>
+              {agentLog.text}
+            </span>
             <i></i>
           </div>
         </div>
