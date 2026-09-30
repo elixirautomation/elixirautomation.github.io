@@ -24,7 +24,7 @@ export function WorkSection() {
   return (
     <section className="section section-shell" id="work" aria-labelledby="work-title">
       <div className="section-heading reveal">
-        <p className="eyebrow">How I work</p>
+        <p className="eyebrow">Capabilities</p>
         <h2 id="work-title">Agentic engineering, grounded in production.</h2>
         <p>I connect specification, implementation, evidence, and operational feedback into systems that help teams move with confidence.</p>
       </div>

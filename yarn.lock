@@ -479,6 +479,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/geist-mono@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/geist-mono@npm:5.3.0"
+  checksum: 10c0/21a4097b3ccce08cbc181199f68a9193adc17d997ef8d883eab7565c6d79a82b2f8d7656f32f97b66f1f0b4ebba78a1a822c6318d55e0c5f572d74683ab036ee
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/geist@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/geist@npm:5.3.0"
+  checksum: 10c0/6b1d1d249643377c885d040769bf0964f242e8d03c4470535329ad4eed3d30a8134fea0d45c0b99b8069924a1f506a3bcb5b8d9cea77b7b5234dc7dd57371842
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.2":
   version: 0.19.2
   resolution: "@humanfs/core@npm:0.19.2"
@@ -585,6 +599,8 @@ __metadata:
   resolution: "@portfolio/app@workspace:app"
   dependencies:
     "@eslint/js": "npm:^9.17.0"
+    "@fontsource-variable/geist": "npm:5.3.0"
+    "@fontsource-variable/geist-mono": "npm:5.3.0"
     "@types/node": "npm:^22.10.5"
     "@types/react": "npm:^19.0.8"
     "@types/react-dom": "npm:^19.0.3"

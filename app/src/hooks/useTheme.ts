@@ -7,7 +7,7 @@ function readInitialTheme(): Theme {
   if (typeof window === 'undefined') return 'dark';
   const saved = window.localStorage.getItem(STORAGE_KEY);
   if (saved === 'dark' || saved === 'light') return saved;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  return 'dark';
 }
 
 /** Owns theme state, DOM attribute sync, persistence, and the meta theme-color tag. */
@@ -17,7 +17,7 @@ export function useTheme() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     window.localStorage.setItem(STORAGE_KEY, theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#07111d' : '#f5f8fa');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#050505' : '#f5f8fa');
   }, [theme]);
 
   const toggleTheme = useCallback(() => {

@@ -1,11 +1,13 @@
+import { profile } from './profile';
+
 export interface NavLink {
   href: string;
   label: string;
 }
 
 export const navLinks: NavLink[] = [
+  { href: '#projects', label: 'Work' },
   { href: '#sentinel', label: 'Sentinel' },
-  { href: '#work', label: 'Work' },
   { href: '#experience', label: 'Experience' },
   { href: '#stack', label: 'Stack' },
   { href: '#contact', label: 'Contact' },
@@ -14,20 +16,25 @@ export const navLinks: NavLink[] = [
 export interface CommandEntry {
   icon: string;
   label: string;
-  shortcut: string;
+  group: 'Navigate' | 'Links' | 'Actions';
+  /** In-page anchor to scroll to. */
   target?: string;
-  action?: 'theme' | 'print';
+  /** External URL, opened in a new tab. */
+  href?: string;
+  action?: 'theme' | 'print' | 'copy-email';
 }
 
-export const commandNavigate: CommandEntry[] = [
-  { icon: '◎', label: 'Explore Sentinel', shortcut: 'S', target: '#sentinel' },
-  { icon: '⌬', label: 'Explore engineering capabilities', shortcut: 'W', target: '#work' },
-  { icon: '↗', label: 'Browse experience', shortcut: 'E', target: '#experience' },
-  { icon: '◇', label: 'Inspect technology stack', shortcut: 'T', target: '#stack' },
-  { icon: '@', label: 'Open contact channel', shortcut: 'C', target: '#contact' },
-];
-
-export const commandActions: CommandEntry[] = [
-  { icon: '◐', label: 'Switch color theme', shortcut: 'D', action: 'theme' },
-  { icon: '⇩', label: 'Save profile as PDF', shortcut: 'P', action: 'print' },
+export const commands: CommandEntry[] = [
+  { group: 'Navigate', icon: '◆', label: 'View projects', target: '#projects' },
+  { group: 'Navigate', icon: '◎', label: 'Explore Sentinel', target: '#sentinel' },
+  { group: 'Navigate', icon: '↗', label: 'View experience', target: '#experience' },
+  { group: 'Navigate', icon: '⌬', label: 'Capabilities', target: '#work' },
+  { group: 'Navigate', icon: '◇', label: 'Technology stack', target: '#stack' },
+  { group: 'Navigate', icon: '⎇', label: 'GitHub activity', target: '#github' },
+  { group: 'Navigate', icon: '@', label: 'Contact me', target: '#contact' },
+  { group: 'Links', icon: '⎋', label: 'Open GitHub', href: profile.links.github },
+  { group: 'Links', icon: '⎋', label: 'Open LinkedIn', href: profile.links.linkedin },
+  { group: 'Actions', icon: '⇩', label: 'Download resume (PDF)', action: 'print' },
+  { group: 'Actions', icon: '⧉', label: 'Copy email address', action: 'copy-email' },
+  { group: 'Actions', icon: '◐', label: 'Toggle theme', action: 'theme' },
 ];

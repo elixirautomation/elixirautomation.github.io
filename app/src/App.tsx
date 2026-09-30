@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import { SiteHeader } from './components/SiteHeader';
 import { HeroSection } from './components/HeroSection';
+import { ProjectsSection } from './components/ProjectsSection';
 import { WorkSection } from './components/WorkSection';
+import { GitHubSection } from './components/GitHubSection';
+import { profile } from './content/profile';
 import { SentinelSection } from './components/SentinelSection';
 import { ExperienceSection } from './components/ExperienceSection';
 import { StackSection } from './components/StackSection';
@@ -14,7 +17,7 @@ import { usePointerEffects } from './hooks/usePointerEffects';
 import { useExpandDetailsForPrint } from './hooks/useExpandDetailsForPrint';
 import { useToast } from './hooks/useToast';
 
-const CONTACT_EMAIL = 'abhilash04sharma@gmail.com';
+const CONTACT_EMAIL = profile.email;
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
@@ -57,25 +60,32 @@ export default function App() {
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <div className="ambient ambient-one" aria-hidden="true"></div>
-      <div className="ambient ambient-two" aria-hidden="true"></div>
+      <div className="backdrop" aria-hidden="true"></div>
       <div className="cursor-glow" aria-hidden="true"></div>
 
-      <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} />
+      <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} onPrint={handlePrint} />
 
       <main id="main-content">
         <HeroSection onPrint={handlePrint} />
-        <WorkSection />
+        <ProjectsSection />
         <SentinelSection />
         <ExperienceSection />
+        <WorkSection />
         <StackSection />
+        <GitHubSection />
         <EducationSection />
-        <ContactSection onCopyEmail={handleCopyEmail} />
+        <ContactSection onCopyEmail={handleCopyEmail} onPrint={handlePrint} />
       </main>
 
       <SiteFooter />
 
-      <CommandPalette open={commandOpen} onClose={closeCommandPalette} onToggleTheme={toggleTheme} onPrint={handlePrint} />
+      <CommandPalette
+        open={commandOpen}
+        onClose={closeCommandPalette}
+        onToggleTheme={toggleTheme}
+        onPrint={handlePrint}
+        onCopyEmail={handleCopyEmail}
+      />
 
       <div className={`toast${toastMessage ? ' show' : ''}`} role="status" aria-live="polite">
         {toastMessage}

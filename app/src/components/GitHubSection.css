@@ -1,0 +1,26 @@
+.github-section{padding-top:0}
+.github-panel{padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+.github-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.github-head .eyebrow{margin-top:0}
+.github-head h2{margin-top:10px;font-size:clamp(1.7rem,3vw,2.5rem)}
+.github-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,2fr);gap:1px;margin-top:24px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--line);list-style:none}
+.github-stats li{padding:14px 16px;background:var(--bg-elevated)}
+.github-stats strong{display:block;font-size:1.6rem;letter-spacing:-.04em;line-height:1.1;font-variant-numeric:tabular-nums}
+.github-stats span{display:block;margin-top:6px;color:var(--muted);font:500 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.github-langs span{margin-top:0}
+.github-langs div{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.github-langs b{padding:3px 7px;border:1px solid var(--line);border-radius:6px;color:var(--text-soft);font:500 10px var(--mono)}
+.github-langs i{color:var(--cyan);font-style:normal}
+.github-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.github-repo{display:grid;align-content:start;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--bg-elevated);text-decoration:none;transition:border-color .2s,translate .2s}
+.github-repo:hover{translate:0 -2px;border-color:color-mix(in srgb,var(--cyan) 45%,var(--line))}
+.github-repo strong{font:600 .86rem var(--mono);overflow-wrap:anywhere}
+.github-repo p{color:var(--text-soft);font-size:.84rem;line-height:1.55}
+.github-repo span{color:var(--muted);font:500 10px var(--mono)}
+.github-skeleton{height:120px;border-radius:14px;background:linear-gradient(90deg,var(--bg-elevated),var(--surface-2),var(--bg-elevated));background-size:200% 100%;animation:ghShimmer 1.4s linear infinite}
+.github-error{margin-top:20px;color:var(--text-soft);font-size:.9rem}
+@keyframes ghShimmer{to{background-position:-200% 0}}
+@media (max-width:900px){.github-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.github-langs{grid-column:1/-1}.github-grid{grid-template-columns:1fr}}
+@media (max-width:420px){.github-stats{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){.github-skeleton{animation:none}}
+@media print{.github-section{display:none!important}}

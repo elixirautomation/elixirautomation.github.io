@@ -6,7 +6,7 @@ export function SentinelSection() {
     <section className="section section-shell sentinel-section" id="sentinel" aria-labelledby="sentinel-title">
       <div className="sentinel-copy reveal">
         <div className="project-label">
-          <span>Flagship platform</span>
+          <span>Project 01 · deep dive</span>
           <span>Built concept → production</span>
         </div>
         <h2 id="sentinel-title">Sentinel</h2>
@@ -57,7 +57,7 @@ export function SentinelSection() {
         </div>
       </div>
 
-      <div className="product-window reveal" aria-label="Conceptual Sentinel test observability dashboard">
+      <div className="product-window reveal" aria-label="Illustrative Sentinel dashboard; figures shown are the published production numbers">
         <div className="window-bar">
           <div>
             <i></i>
@@ -81,7 +81,7 @@ export function SentinelSection() {
                 <small>Engineering health</small>
                 <h3>Test intelligence</h3>
               </div>
-              <span>Last 30 days⌄</span>
+              <span>Illustrative UI</span>
             </div>
             <DashboardPanels
               panels={[
@@ -93,7 +93,7 @@ export function SentinelSection() {
                       <div>
                         <small>Executions</small>
                         <strong>596K+</strong>
-                        <em className="up">↗ 18.4%</em>
+                        <em>observed</em>
                       </div>
                       <div>
                         <small>Test identities</small>
@@ -103,7 +103,7 @@ export function SentinelSection() {
                       <div>
                         <small>AI analysis</small>
                         <strong>~15s</strong>
-                        <em className="up">68% faster</em>
+                        <em className="up">from ~48s · 68% faster</em>
                       </div>
                     </div>
                   ),
@@ -147,18 +147,18 @@ export function SentinelSection() {
                       <div>
                         <span className="failure-icon">AI</span>
                         <p>
-                          <strong>Failure cluster detected</strong>
-                          <small>Authentication timeout · 18 related failures</small>
+                          <strong>Failure clustering</strong>
+                          <small>Groups related failures across runs</small>
                         </p>
-                        <b>Investigate →</b>
+                        <b>Evidence →</b>
                       </div>
                       <div>
                         <span className="failure-icon alt">↗</span>
                         <p>
-                          <strong>Flakiness trending down</strong>
-                          <small>Checkout suite · 7-day window</small>
+                          <strong>Flakiness intelligence</strong>
+                          <small>Separates flaky from genuinely broken</small>
                         </p>
-                        <b>-12.8%</b>
+                        <b>Signal →</b>
                       </div>
                     </div>
                   ),

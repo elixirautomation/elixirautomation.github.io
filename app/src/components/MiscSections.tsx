@@ -1,4 +1,5 @@
-import { ArrowUpIcon, GitHubIcon, LinkedInIcon, PhoneIcon } from './Icons';
+import { profile } from '../content/profile';
+import { ArrowUpIcon, DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon } from './Icons';
 
 export function EducationSection() {
   return (
@@ -16,43 +17,42 @@ export function EducationSection() {
   );
 }
 
-export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
+export function ContactSection({ onCopyEmail, onPrint }: { onCopyEmail: () => void; onPrint: () => void }) {
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-title">
-      <div className="contact-orb orb-one" aria-hidden="true"></div>
-      <div className="contact-orb orb-two" aria-hidden="true"></div>
       <div className="section-shell contact-inner reveal">
         <p className="eyebrow">Open channel</p>
-        <h2 id="contact-title">Let’s build systems that help engineers understand what happens next.</h2>
-        <p>Quality platforms, agent workflows, developer tooling, and production reliability.</p>
+        <h2 id="contact-title">Let’s build something intelligent.</h2>
+        <p>Have a hard problem in agent workflows, test intelligence, or production reliability? I would like to hear about it.</p>
         <div className="contact-actions">
-          <a className="button button-light" href="mailto:abhilash04sharma@gmail.com">
-            abhilash04sharma@gmail.com
+          <a className="button button-primary" href={`mailto:${profile.email}`}>
+            <MailIcon />
+            Start a conversation <span aria-hidden="true">→</span>
           </a>
-          <a className="button button-ghost contact-phone" href="tel:+919814606102">
+          <a className="button button-secondary contact-phone" href={profile.phone.href}>
             <PhoneIcon />
             <span className="flag" aria-hidden="true">
               🇮🇳
             </span>
-            +91-9814606102
+            {profile.phone.display}
           </a>
-          <button className="button button-ghost contact-copy" type="button" onClick={onCopyEmail}>
+          <button className="button button-quiet contact-copy" type="button" onClick={onCopyEmail}>
             Copy email
           </button>
+          <button className="button button-quiet contact-resume" type="button" onClick={onPrint}>
+            <DownloadIcon />
+            Resume (PDF)
+          </button>
         </div>
+        <p className="contact-email">{profile.email}</p>
         <div className="social-links">
-          <a
-            className="social-link"
-            href="https://www.linkedin.com/in/abhilash-sharma-profile"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <LinkedInIcon />
-            <span>LinkedIn</span>
-          </a>
-          <a className="social-link" href="https://github.com/elixirautomation" target="_blank" rel="noreferrer">
+          <a className="social-link" href={profile.links.github} target="_blank" rel="noreferrer">
             <GitHubIcon />
             <span>GitHub</span>
+          </a>
+          <a className="social-link" href={profile.links.linkedin} target="_blank" rel="noreferrer">
+            <LinkedInIcon />
+            <span>LinkedIn</span>
           </a>
         </div>
       </div>
@@ -63,8 +63,8 @@ export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer section-shell">
-      <span className="footer-copy">© {new Date().getFullYear()} Abhilash Sharma</span>
-      <span className="footer-note">Designed as a static, accessible system.</span>
+      <span className="footer-copy">© {new Date().getFullYear()} {profile.name}</span>
+      <span className="footer-note">Built with React · TypeScript · Vite. Powered by curiosity.</span>
       <a className="back-to-top" href="#home">
         <span>Back to top</span>
         <ArrowUpIcon />
