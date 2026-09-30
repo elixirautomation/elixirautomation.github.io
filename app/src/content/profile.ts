@@ -8,7 +8,7 @@ export const profile = {
   tagline: 'AI agents · test intelligence · reliability',
   positioning:
     'Quality Engineer focused on AI-native platforms and production reliability, with 10+ years across software engineering, test platforms, observability, and production systems. Over the last 3 years I have built AI agents, MCP workflows, test intelligence, and developer tooling with Kiro, Amazon Bedrock, and AgentCore.',
-  currentFocus: 'Building Sentinel at Entain',
+  currentFocus: 'SDET III at Entain India',
   email: 'abhilash04sharma@gmail.com',
   phone: { display: '+91-9814606102', href: 'tel:+919814606102' },
   links: {

@@ -2,11 +2,10 @@ import { profile } from '../content/profile';
 import { useRotatingText } from '../hooks/useRotatingText';
 import { AgentPipeline } from './AgentPipeline';
 import { HeroMetrics } from './HeroMetrics';
-import { DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon } from './Icons';
 
 const ROTATING_WORDS = ['observable.', 'explainable.', 'resilient.', 'scalable.'];
 
-export function HeroSection({ onPrint }: { onPrint: () => void }) {
+export function HeroSection() {
   const rotatingWord = useRotatingText(ROTATING_WORDS, 2800);
 
   return (
@@ -17,7 +16,7 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
           {profile.currentFocus}
         </div>
         <p className="eyebrow">
-          {profile.name} · {profile.role} · {profile.location}
+          {profile.name} · AI-native Mission Pod · {profile.location}
         </p>
         <h1 id="hero-title">
           I build AI agents and platforms that make engineering quality{' '}
@@ -30,23 +29,8 @@ export function HeroSection({ onPrint }: { onPrint: () => void }) {
           <a className="button button-primary" href="#projects">
             Explore projects <span aria-hidden="true">↘</span>
           </a>
-          <button className="button button-secondary" type="button" onClick={onPrint}>
-            <DownloadIcon />
-            Resume (PDF)
-          </button>
-        </div>
-        <div className="hero-links" aria-label="Profiles and contact">
-          <a href={profile.links.github} target="_blank" rel="noreferrer">
-            <GitHubIcon />
-            GitHub
-          </a>
-          <a href={profile.links.linkedin} target="_blank" rel="noreferrer">
-            <LinkedInIcon />
-            LinkedIn
-          </a>
-          <a href={`mailto:${profile.email}`}>
-            <MailIcon />
-            Email
+          <a className="button button-secondary" href="#contact">
+            Get in touch
           </a>
         </div>
         <HeroMetrics />

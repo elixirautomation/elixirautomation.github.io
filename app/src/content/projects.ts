@@ -23,7 +23,10 @@ export interface ProjectCaseStudy {
   tech: string[];
   /** Only published, sourced figures. Empty = no metrics published, rendered as such. */
   impact: { value: string; label: string }[];
+  /** External links only; every card also opens its in-page case study. */
   links: ProjectLink[];
+  /** Optional product preview rendered inside the case study. */
+  preview?: 'sentinel-dashboard';
 }
 
 export const projects: ProjectCaseStudy[] = [
@@ -56,7 +59,8 @@ export const projects: ProjectCaseStudy[] = [
       { value: '20K+', label: 'logical test identities' },
       { value: '48s → 15s', label: 'AI analysis latency (~68% faster)' },
     ],
-    links: [{ label: 'Open case study', href: '#sentinel' }],
+    links: [],
+    preview: 'sentinel-dashboard',
   },
   {
     id: 'brazil-identity',
@@ -82,7 +86,7 @@ export const projects: ProjectCaseStudy[] = [
     ],
     tech: ['Java', 'Kubernetes', 'JMeter', 'Kiro / MCP'],
     impact: [{ value: '3.5M', label: 'projected account transition supported' }],
-    links: [{ label: 'See the role', href: '#experience' }],
+    links: [],
   },
   {
     id: 'migration-pipeline',
@@ -107,7 +111,7 @@ export const projects: ProjectCaseStudy[] = [
     ],
     tech: ['Python', 'Concurrency', 'Resilience patterns'],
     impact: [],
-    links: [{ label: 'See the role', href: '#experience' }],
+    links: [],
   },
   {
     id: 'decision-lab',

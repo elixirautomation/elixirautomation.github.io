@@ -11,7 +11,6 @@ export const careerRoles: CareerRole[] = [
     summary:
       'Maker in the organisation’s first successful AI-native Mission Pod, with hands-on ownership across backend services, quality engineering, agent workflows, reliability, and the Sentinel platform.',
     tags: ['Agentic PDLC', 'Kiro / MCP', 'Amazon Bedrock', 'Java', 'Python'],
-    relatedLink: { label: 'Explore the Sentinel platform', href: '#sentinel' },
     embeddedProject: {
       eyebrow: 'Embedded project',
       title: 'Mission Pod · Brazil identity delivery',

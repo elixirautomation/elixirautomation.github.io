@@ -31,7 +31,7 @@ function summarise(user: { public_repos: number; followers: number }, repos: Git
     followers: user.followers,
     ownRepos: own.length,
     languages: [...counts].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count).slice(0, 5),
-    recent: own.slice(0, 3),
+    recent: own.slice(0, 6),
   };
 }
 

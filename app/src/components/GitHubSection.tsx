@@ -1,7 +1,10 @@
 import { profile } from '../content/profile';
+import { projects } from '../content/projects';
 import { useGitHubProfile } from '../hooks/useGitHubProfile';
-import { GitHubIcon } from './Icons';
 import './GitHubSection.css';
+
+/** Repos already featured as project case studies are not repeated here. */
+const featured = new Set(projects.flatMap((project) => project.links.map((link) => link.href.toLowerCase())));
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' });
 
@@ -16,9 +19,6 @@ export function GitHubSection() {
             <p className="eyebrow">GitHub activity</p>
             <h2 id="github-title">Open work, live from the API.</h2>
           </div>
-          <a className="project-link" href={profile.links.github} target="_blank" rel="noreferrer">
-            <GitHubIcon />@{profile.githubUser} <span aria-hidden="true">↗</span>
-          </a>
         </div>
 
         {state.status === 'loading' && (
@@ -31,7 +31,7 @@ export function GitHubSection() {
         )}
 
         {state.status === 'error' && (
-          <p className="github-error">GitHub’s API is unavailable right now (it rate-limits anonymous visitors). The profile link above still works.</p>
+          <p className="github-error">GitHub’s API is unavailable right now (it rate-limits anonymous visitors). The GitHub link in the contact section still works.</p>
         )}
 
         {state.status === 'ready' && (
@@ -61,7 +61,7 @@ export function GitHubSection() {
               </li>
             </ul>
             <div className="github-grid">
-              {state.data.recent.map((repo) => (
+              {state.data.recent.filter((repo) => !featured.has(repo.html_url.toLowerCase())).slice(0, 3).map((repo) => (
                 <a className="github-repo" key={repo.name} href={repo.html_url} target="_blank" rel="noreferrer">
                   <strong>{repo.name}</strong>
                   <p>{repo.description ?? 'No description.'}</p>

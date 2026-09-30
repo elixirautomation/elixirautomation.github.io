@@ -1,5 +1,5 @@
 import { profile } from '../content/profile';
-import { ArrowUpIcon, DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon } from './Icons';
+import { ArrowUpIcon, GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon } from './Icons';
 
 export function EducationSection() {
   return (
@@ -17,7 +17,7 @@ export function EducationSection() {
   );
 }
 
-export function ContactSection({ onCopyEmail, onPrint }: { onCopyEmail: () => void; onPrint: () => void }) {
+export function ContactSection({ onCopyEmail }: { onCopyEmail: () => void }) {
   return (
     <section className="contact-section" id="contact" aria-labelledby="contact-title">
       <div className="section-shell contact-inner reveal">
@@ -36,15 +36,13 @@ export function ContactSection({ onCopyEmail, onPrint }: { onCopyEmail: () => vo
             </span>
             {profile.phone.display}
           </a>
-          <button className="button button-quiet contact-copy" type="button" onClick={onCopyEmail}>
-            Copy email
-          </button>
-          <button className="button button-quiet contact-resume" type="button" onClick={onPrint}>
-            <DownloadIcon />
-            Resume (PDF)
+          <button className="button button-quiet contact-copy" type="button" onClick={onCopyEmail} aria-label={`Copy ${profile.email}`}>
+            <span className="contact-email-text">{profile.email}</span>
+            <span className="contact-copy-hint" aria-hidden="true">
+              ⧉ copy
+            </span>
           </button>
         </div>
-        <p className="contact-email">{profile.email}</p>
         <div className="social-links">
           <a className="social-link" href={profile.links.github} target="_blank" rel="noreferrer">
             <GitHubIcon />

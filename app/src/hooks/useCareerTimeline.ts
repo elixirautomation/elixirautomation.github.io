@@ -77,9 +77,13 @@ export function useCareerTimeline(roleCount: number) {
     };
 
     requestRender();
+    // Panels animate their height, so re-measure the line whenever the timeline resizes.
+    const observer = 'ResizeObserver' in window && timelineRef.current ? new ResizeObserver(requestRender) : null;
+    if (observer && timelineRef.current) observer.observe(timelineRef.current);
     window.addEventListener('scroll', requestRender, { passive: true });
     window.addEventListener('resize', requestRender, { passive: true });
     return () => {
+      observer?.disconnect();
       window.removeEventListener('scroll', requestRender);
       window.removeEventListener('resize', requestRender);
     };

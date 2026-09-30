@@ -7,9 +7,9 @@ export interface NavLink {
 
 export const navLinks: NavLink[] = [
   { href: '#projects', label: 'Work' },
-  { href: '#sentinel', label: 'Sentinel' },
   { href: '#experience', label: 'Experience' },
   { href: '#stack', label: 'Stack' },
+  { href: '#github', label: 'GitHub' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -26,9 +26,7 @@ export interface CommandEntry {
 
 export const commands: CommandEntry[] = [
   { group: 'Navigate', icon: '◆', label: 'View projects', target: '#projects' },
-  { group: 'Navigate', icon: '◎', label: 'Explore Sentinel', target: '#sentinel' },
   { group: 'Navigate', icon: '↗', label: 'View experience', target: '#experience' },
-  { group: 'Navigate', icon: '⌬', label: 'Capabilities', target: '#work' },
   { group: 'Navigate', icon: '◇', label: 'Technology stack', target: '#stack' },
   { group: 'Navigate', icon: '⎇', label: 'GitHub activity', target: '#github' },
   { group: 'Navigate', icon: '@', label: 'Contact me', target: '#contact' },

@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'motion/react';
 import { careerRoles } from '../content/careerRoles';
 import { useCareerTimeline } from '../hooks/useCareerTimeline';
 import type { CareerRole } from '../content/types';
@@ -33,6 +34,7 @@ function EmbeddedProjectView({ project }: { project: NonNullable<CareerRole['emb
 export function ExperienceSection() {
   const { timelineRef, registerItem, lineProgress, lineStart, lineEnd, focusedIndex, pastFlags, openIndex, toggleRole } =
     useCareerTimeline(careerRoles.length);
+  const reduce = useReducedMotion();
 
   return (
     <section className="section section-shell" id="experience" aria-labelledby="experience-title">
@@ -69,8 +71,14 @@ export function ExperienceSection() {
             >
               <div className="career-date">{role.dateRange}</div>
               <div className="career-node" ref={registerItem(index)} aria-hidden="true"></div>
-              <details className="career-card" open={isOpen} onToggle={(event) => toggleRole(index, event.currentTarget.open)}>
-                <summary className="career-summary">
+              <div className={`career-card${isOpen ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className="career-summary"
+                  aria-expanded={isOpen}
+                  aria-controls={`role-panel-${role.id}`}
+                  onClick={() => toggleRole(index, !isOpen)}
+                >
                   <div className="career-head">
                     <div>
                       <span>{role.company}</span>
@@ -83,15 +91,26 @@ export function ExperienceSection() {
                     <span className="close-label">Close</span>
                     <i>+</i>
                   </span>
-                </summary>
-                <div className="career-panel">
+                </button>
+                <motion.div
+                  id={`role-panel-${role.id}`}
+                  className="career-panel-wrap"
+                  initial={false}
+                  animate={isOpen ? 'open' : 'closed'}
+                  variants={{
+                    open: { height: 'auto', opacity: 1 },
+                    closed: { height: 0, opacity: 0 },
+                  }}
+                  transition={reduce ? { duration: 0 } : { height: { type: 'spring', stiffness: 260, damping: 32 }, opacity: { duration: 0.25 } }}
+                  inert={!isOpen}
+                >
+                <motion.div
+                  className="career-panel"
+                  animate={isOpen ? { y: 0 } : { y: -8 }}
+                  transition={reduce ? { duration: 0 } : { duration: 0.3, ease: [0.22, 0.61, 0.36, 1] }}
+                >
                   <p>{role.summary}</p>
                   {role.embeddedProject && <EmbeddedProjectView project={role.embeddedProject} />}
-                  {role.relatedLink && (
-                    <a className="inline-link" href={role.relatedLink.href}>
-                      {role.relatedLink.label} <span aria-hidden="true">↗</span>
-                    </a>
-                  )}
                   {role.tags && (
                     <div className="tag-row">
                       {role.tags.map((tag) => (
@@ -99,8 +118,9 @@ export function ExperienceSection() {
                       ))}
                     </div>
                   )}
-                </div>
-              </details>
+                </motion.div>
+                </motion.div>
+              </div>
             </article>
           );
         })}

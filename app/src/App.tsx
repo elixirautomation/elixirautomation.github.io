@@ -2,10 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { SiteHeader } from './components/SiteHeader';
 import { HeroSection } from './components/HeroSection';
 import { ProjectsSection } from './components/ProjectsSection';
-import { WorkSection } from './components/WorkSection';
 import { GitHubSection } from './components/GitHubSection';
 import { profile } from './content/profile';
-import { SentinelSection } from './components/SentinelSection';
 import { ExperienceSection } from './components/ExperienceSection';
 import { StackSection } from './components/StackSection';
 import { EducationSection, ContactSection, SiteFooter } from './components/MiscSections';
@@ -14,7 +12,6 @@ import { VercelAnalytics } from './components/VercelAnalytics';
 import { useTheme } from './hooks/useTheme';
 import { useScrollReveal } from './hooks/useScrollReveal';
 import { usePointerEffects } from './hooks/usePointerEffects';
-import { useExpandDetailsForPrint } from './hooks/useExpandDetailsForPrint';
 import { useToast } from './hooks/useToast';
 
 const CONTACT_EMAIL = profile.email;
@@ -26,7 +23,6 @@ export default function App() {
 
   useScrollReveal();
   usePointerEffects();
-  useExpandDetailsForPrint();
 
   const openCommandPalette = useCallback(() => setCommandOpen(true), []);
   const closeCommandPalette = useCallback(() => setCommandOpen(false), []);
@@ -66,15 +62,13 @@ export default function App() {
       <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} onPrint={handlePrint} />
 
       <main id="main-content">
-        <HeroSection onPrint={handlePrint} />
+        <HeroSection />
         <ProjectsSection />
-        <SentinelSection />
         <ExperienceSection />
-        <WorkSection />
         <StackSection />
         <GitHubSection />
         <EducationSection />
-        <ContactSection onCopyEmail={handleCopyEmail} onPrint={handlePrint} />
+        <ContactSection onCopyEmail={handleCopyEmail} />
       </main>
 
       <SiteFooter />

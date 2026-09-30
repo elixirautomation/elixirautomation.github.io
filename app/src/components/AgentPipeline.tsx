@@ -13,7 +13,7 @@ const STAGES = [
 ];
 
 const AGENT_LOGS = [
-  'sentinel.ingest → analyze → explain',
+  'tests.ingest → analyze → explain',
   'mcp.spec → generate → validate',
   'signals.logs + traces + performance',
   'agentcore.runtime → tool → evidence',
