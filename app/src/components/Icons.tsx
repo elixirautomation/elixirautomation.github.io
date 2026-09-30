@@ -69,3 +69,50 @@ export function ArrowUpIcon() {
     </svg>
   );
 }
+
+export function MailIcon() {
+  return (
+    <svg
+      className="icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3.5 6.5 8.5 6 8.5-6" />
+    </svg>
+  );
+}
+
+/** Stroke icon shell shared by the line icons below. */
+function StrokeIcon({ d, className = 'icon' }: { d: string; className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.9"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d={d} />
+    </svg>
+  );
+}
+
+export const ArrowRightIcon = () => <StrokeIcon d="M5 12h14m0 0-6-6m6 6-6 6" />;
+export const ArrowDownRightIcon = () => <StrokeIcon d="M7 7l10 10m0 0V8m0 9H8" />;
+export const ArrowUpRightIcon = () => <StrokeIcon d="M7 17 17 7m0 0H8m9 0v9" />;
+export const CloseIcon = () => <StrokeIcon d="M6 6l12 12M18 6 6 18" />;
+export const CopyIcon = () => <StrokeIcon d="M9 9h10v10H9zM5 15V5h10" />;
+export const StarIcon = () => (
+  <StrokeIcon d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" />
+);

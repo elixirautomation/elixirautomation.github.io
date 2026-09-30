@@ -1,0 +1,50 @@
+.github-section{padding-top:0}
+.github-panel{padding:clamp(22px,3vw,34px);border:1px solid var(--line);border-radius:22px;background:var(--surface)}
+.github-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.github-head .eyebrow{margin-top:0}
+.github-head h2{max-width:22ch;margin-top:10px;font-size:clamp(1.7rem,3vw,2.5rem)}
+.gh-profile-link{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border:1px solid var(--line-strong);border-radius:10px;color:var(--text);font-size:.86rem;font-weight:600;text-decoration:none;transition:border-color .2s}
+.gh-profile-link:hover{border-color:color-mix(in srgb,var(--cyan) 55%,var(--line))}
+.gh-profile-link .icon{width:14px;height:14px}
+
+/* Summary: 3 figures + language share, one row on wide screens. */
+.gh-summary{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:10px;margin-top:24px}
+.gh-summary-skeleton{height:86px;border-radius:14px;background:linear-gradient(90deg,var(--bg-elevated),var(--surface-2),var(--bg-elevated));background-size:200% 100%;animation:ghShimmer 1.4s linear infinite}
+.github-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:0;padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--line);list-style:none}
+.github-stats li{padding:14px 16px;background:var(--bg-elevated)}
+.github-stats strong{display:block;font-size:1.6rem;letter-spacing:-.04em;line-height:1.1;font-variant-numeric:tabular-nums}
+.github-stats span,.gh-label{display:block;margin-top:6px;color:var(--muted);font:500 9px var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.gh-langs{padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg-elevated)}
+.gh-label{margin-top:0}
+/* Five tones stepped from the accent so the bar reads in either theme. */
+.gh-langs [style]{--lang-color:color-mix(in srgb,var(--cyan) calc(100% - var(--lang-tone) * 18%),var(--blue))}
+.gh-lang-bar{display:flex;gap:2px;height:8px;margin-top:10px;border-radius:999px;overflow:hidden}
+.gh-lang-bar i{min-width:4px;background:var(--lang-color);opacity:calc(1 - var(--lang-tone) * .14)}
+.gh-lang-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 0;padding:0;list-style:none;color:var(--text-soft);font:500 10px var(--mono)}
+.gh-lang-legend li{display:inline-flex;align-items:center;gap:6px}
+.gh-lang-legend b{width:7px;height:7px;border-radius:2px;background:var(--lang-color);opacity:calc(1 - var(--lang-tone) * .14)}
+.gh-lang-legend span{color:var(--muted)}
+
+/* Curated repos: System One leads, frameworks follow. */
+.github-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 0;padding:0;list-style:none}
+.github-grid li{display:flex;min-width:0}
+.github-repo{flex:1;display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--bg-elevated);text-decoration:none;transition:border-color .2s,translate .2s}
+.github-repo:hover{translate:0 -2px;border-color:color-mix(in srgb,var(--cyan) 45%,var(--line))}
+.github-featured{display:flex;margin-top:10px}
+.github-featured .github-repo{border-color:color-mix(in srgb,var(--cyan) 30%,var(--line));background:radial-gradient(ellipse 70% 90% at 0% 0%,color-mix(in srgb,var(--cyan) 7%,transparent),transparent 70%),var(--bg-elevated)}
+.gh-surface{color:var(--cyan);font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.github-repo strong{font:600 .86rem var(--mono);overflow-wrap:anywhere}
+.github-repo p{color:var(--text-soft);font-size:.84rem;line-height:1.55}
+.gh-meta{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:6px;color:var(--muted);font:500 10px var(--mono)}
+.gh-meta .icon{width:11px;height:11px}
+.gh-swipe-hint{display:none}
+.github-note{margin-top:14px;color:var(--muted);font-size:.84rem}
+@keyframes ghShimmer{to{background-position:-200% 0}}
+
+@media (max-width:900px){.gh-summary{grid-template-columns:1fr}.github-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){
+  .github-grid{grid-template-columns:1fr}
+  .github-stats li{padding:12px}.github-stats strong{font-size:1.35rem}.github-stats span{font-size:8px;letter-spacing:.04em}
+}
+@media (prefers-reduced-motion:reduce){.gh-summary-skeleton{animation:none}.github-repo{transition:none}}
+@media print{.github-section{display:none!important}}

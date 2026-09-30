@@ -3,7 +3,7 @@ import type { CareerRole } from './types';
 export const careerRoles: CareerRole[] = [
   {
     id: 'entain-india',
-    dateRange: 'Sep 2023 — Present',
+    start: '2023-09',
     company: 'Entain India',
     title: 'SDET III',
     location: 'Pune, Maharashtra',
@@ -11,7 +11,6 @@ export const careerRoles: CareerRole[] = [
     summary:
       'Maker in the organisation’s first successful AI-native Mission Pod, with hands-on ownership across backend services, quality engineering, agent workflows, reliability, and the Sentinel platform.',
     tags: ['Agentic PDLC', 'Kiro / MCP', 'Amazon Bedrock', 'Java', 'Python'],
-    relatedLink: { label: 'Explore the Sentinel platform', href: '#sentinel' },
     embeddedProject: {
       eyebrow: 'Embedded project',
       title: 'Mission Pod · Brazil identity delivery',
@@ -20,6 +19,7 @@ export const careerRoles: CareerRole[] = [
       highlights: [
         {
           title: 'Digital identity',
+          metric: '3.5M',
           description:
             'Co-delivered a Brazil integration with provider Serasa through the BIA aggregation layer, supporting a projected 3.5 million account transition.',
         },
@@ -39,25 +39,30 @@ export const careerRoles: CareerRole[] = [
   },
   {
     id: 'paytm',
-    dateRange: 'Jun 2023 — Sep 2023',
+    start: '2023-06',
+    end: '2023-09',
     company: 'Paytm',
     title: 'QA Lead',
     location: 'Pune, Maharashtra',
     summary:
       'Increased API test automation coverage by 30% while handling in-sprint quality delivery, requirement reviews, and maintainable service-testing practices.',
+    impact: { value: '+30%', label: 'API automation coverage' },
   },
   {
     id: 'goto-financial',
-    dateRange: 'Feb 2020 — Jun 2023',
+    start: '2020-02',
+    end: '2023-06',
     company: 'GoTo Financial',
     title: 'Senior QA Engineer',
     location: 'Pune, Maharashtra',
     summary:
       'Implemented microservice test processes that reduced manual effort by 75%, supported production reliability, and improved discoverability through reusable automation.',
+    impact: { value: '−75%', label: 'Manual test effort' },
   },
   {
     id: 'block8',
-    dateRange: 'Jan 2019 — Feb 2020',
+    start: '2019-01',
+    end: '2020-02',
     company: 'Block8 · Redbelly Network',
     title: 'Senior Test Automation Engineer',
     location: 'Chandigarh',
@@ -66,7 +71,8 @@ export const careerRoles: CareerRole[] = [
   },
   {
     id: 'sonetel',
-    dateRange: 'Feb 2018 — Jan 2019',
+    start: '2018-02',
+    end: '2019-01',
     company: 'Sonetel',
     title: 'Test Automation Engineer (R&D)',
     location: 'Hyderabad',
@@ -75,11 +81,13 @@ export const careerRoles: CareerRole[] = [
   },
   {
     id: 'cognizant',
-    dateRange: 'Dec 2015 — Feb 2018',
+    start: '2015-12',
+    end: '2018-02',
     company: 'Cognizant',
     title: 'Programmer Analyst / Trainee',
     location: 'Pune, Maharashtra',
     summary:
       'Built a Coded UI regression suite for MSCRM that reduced manual regression effort by 90%, applying synchronization and stabilization practices.',
+    impact: { value: '−90%', label: 'Manual regression effort' },
   },
 ];

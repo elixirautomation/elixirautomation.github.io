@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import { navLinks } from '../content/navigation';
 import { useActiveSection } from '../hooks/useActiveSection';
 import type { Theme } from '../hooks/useTheme';
+import { profile } from '../content/profile';
+import { DownloadIcon } from './Icons';
 
 interface SiteHeaderProps {
   theme: Theme;
   onToggleTheme: () => void;
   onOpenCommandPalette: () => void;
+  onPrint: () => void;
 }
 
-export function SiteHeader({ theme, onToggleTheme, onOpenCommandPalette }: SiteHeaderProps) {
+export function SiteHeader({ theme, onToggleTheme, onOpenCommandPalette, onPrint }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const activeHash = useActiveSection(navLinks.map((link) => link.href));
@@ -31,7 +34,7 @@ export function SiteHeader({ theme, onToggleTheme, onOpenCommandPalette }: SiteH
         </span>
         <span className="brand-copy">
           <strong>Abhilash Sharma</strong>
-          <small>Quality · platform · reliability</small>
+          <small>{profile.tagline}</small>
         </span>
       </a>
       <button
@@ -53,8 +56,12 @@ export function SiteHeader({ theme, onToggleTheme, onOpenCommandPalette }: SiteH
         ))}
       </nav>
       <div className="header-actions">
+        <button className="icon-button resume-button" type="button" onClick={onPrint} aria-label="Download resume as PDF" title="Resume (PDF)">
+          <DownloadIcon />
+          <span>Resume</span>
+        </button>
         <button
-          className="icon-button"
+          className="icon-button palette-button"
           type="button"
           aria-label="Open command palette"
           title="Command palette (Ctrl/⌘ K)"

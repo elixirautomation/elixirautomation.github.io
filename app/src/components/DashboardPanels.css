@@ -1,53 +1,10 @@
-/*
- * Mobile-only styles for the Sentinel dashboard panel deck. On desktop the
- * panels render as plain stacked divs and none of this applies.
- *
- * Uniform-size pagination bullets with colour-only transitions, for the same
- * reason as CardCarousel: animating bullet width animates layout and can leave
- * a stalled intermediate state.
- */
-.dash-carousel {
-  --swiper-pagination-bottom: 0px;
-  --swiper-pagination-color: var(--cyan);
-  --swiper-pagination-bullet-width: 18px;
-  --swiper-pagination-bullet-height: 3px;
-  --swiper-pagination-bullet-border-radius: 999px;
-  --swiper-pagination-bullet-horizontal-gap: 3px;
-  --swiper-pagination-bullet-inactive-color: var(--muted);
-  --swiper-pagination-bullet-inactive-opacity: 0.3;
-
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  margin-top: 16px;
-  padding-bottom: 22px;
-  overflow-x: clip;
-  touch-action: pan-y;
-}
-
-.dash-carousel .swiper-pagination-bullet {
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-}
-
-.dash-carousel-slide {
-  height: auto;
-}
-
-.dash-carousel-label {
-  margin-bottom: 8px;
-  color: var(--muted);
-  font: 600 8px var(--mono);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-/* The chart is hidden globally at this width; inside the deck it is a panel. */
-.dash-carousel-slide .chart-card {
-  display: block;
-  margin-top: 0;
-}
-
-.dash-carousel-slide .dash-metrics,
-.dash-carousel-slide .failure-row {
-  margin-top: 0;
-}
+/* Sentinel dashboard panels: stacked on wide screens, tabs on phones. */
+.dash-stack,.dash-tabs{margin-top:16px}
+.dash-tablist{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px;margin-bottom:10px;padding:3px;border:1px solid var(--line);border-radius:11px;background:var(--bg-elevated)}
+.dash-tablist button{position:relative;min-height:36px;padding:0 6px;border:0;border-radius:8px;background:transparent;color:var(--muted);font:600 9px var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;isolation:isolate}
+.dash-tablist button[aria-selected="true"]{color:var(--text)}
+.dash-tab-pill{position:absolute;inset:0;z-index:-1;border:1px solid color-mix(in srgb,var(--cyan) 40%,var(--line));border-radius:8px;background:var(--surface)}
+.dash-slide{padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+/* The chart is hidden globally at phone width; inside a tab it is a panel. */
+.dash-slide .chart-card{display:block;margin-top:0}
+.dash-slide .dash-metrics,.dash-slide .failure-row{margin-top:0}

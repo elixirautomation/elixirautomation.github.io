@@ -13,10 +13,12 @@
     "clean": "rimraf dist node_modules/.vite tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo"
   },
   "dependencies": {
+    "@fontsource-variable/geist": "5.3.0",
+    "@fontsource-variable/geist-mono": "5.3.0",
     "@vercel/analytics": "^2.0.1",
+    "motion": "13.4.6",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "swiper": "^12.1.2"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

@@ -1,29 +1,29 @@
 import { useCallback, useEffect, useState } from 'react';
+import { MotionConfig } from 'motion/react';
 import { SiteHeader } from './components/SiteHeader';
 import { HeroSection } from './components/HeroSection';
-import { WorkSection } from './components/WorkSection';
-import { SentinelSection } from './components/SentinelSection';
+import { ProjectsSection } from './components/ProjectsSection';
+import { GitHubSection } from './components/GitHubSection';
+import { profile } from './content/profile';
 import { ExperienceSection } from './components/ExperienceSection';
 import { StackSection } from './components/StackSection';
 import { EducationSection, ContactSection, SiteFooter } from './components/MiscSections';
 import { CommandPalette } from './components/CommandPalette';
 import { VercelAnalytics } from './components/VercelAnalytics';
+import { SectionBar } from './components/SectionBar';
+import { DensityProvider } from './components/DensityProvider';
 import { useTheme } from './hooks/useTheme';
-import { useScrollReveal } from './hooks/useScrollReveal';
 import { usePointerEffects } from './hooks/usePointerEffects';
-import { useExpandDetailsForPrint } from './hooks/useExpandDetailsForPrint';
 import { useToast } from './hooks/useToast';
 
-const CONTACT_EMAIL = 'abhilash04sharma@gmail.com';
+const CONTACT_EMAIL = profile.email;
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
   const { message: toastMessage, showToast } = useToast();
   const [commandOpen, setCommandOpen] = useState(false);
 
-  useScrollReveal();
   usePointerEffects();
-  useExpandDetailsForPrint();
 
   const openCommandPalette = useCallback(() => setCommandOpen(true), []);
   const closeCommandPalette = useCallback(() => setCommandOpen(false), []);
@@ -53,35 +53,44 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    // One reduced-motion policy for every motion component on the page.
+    <MotionConfig reducedMotion="user">
+      <DensityProvider>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
-      <div className="ambient ambient-one" aria-hidden="true"></div>
-      <div className="ambient ambient-two" aria-hidden="true"></div>
+      <div className="backdrop" aria-hidden="true"></div>
       <div className="cursor-glow" aria-hidden="true"></div>
 
-      <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} />
+      <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} onPrint={handlePrint} />
+      <SectionBar />
 
       <main id="main-content">
-        <HeroSection onPrint={handlePrint} />
-        <WorkSection />
-        <SentinelSection />
+        <HeroSection />
+        <ProjectsSection />
         <ExperienceSection />
         <StackSection />
+        <GitHubSection />
         <EducationSection />
         <ContactSection onCopyEmail={handleCopyEmail} />
       </main>
 
       <SiteFooter />
 
-      <CommandPalette open={commandOpen} onClose={closeCommandPalette} onToggleTheme={toggleTheme} onPrint={handlePrint} />
+      <CommandPalette
+        open={commandOpen}
+        onClose={closeCommandPalette}
+        onToggleTheme={toggleTheme}
+        onPrint={handlePrint}
+        onCopyEmail={handleCopyEmail}
+      />
 
       <div className={`toast${toastMessage ? ' show' : ''}`} role="status" aria-live="polite">
         {toastMessage}
       </div>
 
       <VercelAnalytics />
-    </>
+      </DensityProvider>
+    </MotionConfig>
   );
 }

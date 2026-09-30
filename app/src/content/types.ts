@@ -1,11 +1,3 @@
-export interface CapabilityCard {
-  index: string;
-  icon: string;
-  title: string;
-  description: string;
-  tags: string[];
-}
-
 export interface StackCard {
   eyebrow: string;
   title: string;
@@ -15,6 +7,14 @@ export interface StackCard {
 export interface TenureHighlight {
   title: string;
   description: string;
+  /** Optional headline figure, e.g. "3.5M". */
+  metric?: string;
+}
+
+/** A single quantified outcome shown as the role's stat. */
+export interface RoleImpact {
+  value: string;
+  label: string;
 }
 
 export interface EmbeddedProject {
@@ -27,29 +27,16 @@ export interface EmbeddedProject {
 
 export interface CareerRole {
   id: string;
-  dateRange: string;
+  /** `YYYY-MM`. Display range and duration are derived from start/end. */
+  start: string;
+  /** `YYYY-MM`; omitted for the current role. */
+  end?: string;
   company: string;
   title: string;
   location: string;
   summary: string;
+  impact?: RoleImpact;
   current?: boolean;
   tags?: string[];
   embeddedProject?: EmbeddedProject;
-  relatedLink?: { label: string; href: string };
-}
-
-export interface SentinelStoryStep {
-  step: string;
-  title: string;
-  description: string;
-}
-
-export interface SentinelProofPoint {
-  value: string;
-  label: string;
-}
-
-export interface SentinelFeature {
-  index: string;
-  description: string;
 }

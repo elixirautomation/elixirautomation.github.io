@@ -1,0 +1,113 @@
+/*
+ * Phone summary mode.
+ *
+ * `html[data-density="compact"]` is set by DensityProvider only on screens
+ * <=720px while "Expand all" is off. Every rule here trims or folds secondary
+ * detail; nothing is removed that is not reachable by one tap (a fold toggle,
+ * the case-study sheet, or the section bar's "Expand all"). Screen-only, so
+ * the printed résumé always gets the full layout.
+ */
+
+/* ---- Section bar (phones, both modes) ----------------------------------- */
+.section-bar{position:fixed;inset:var(--header-h) 0 auto;z-index:99;display:flex;align-items:center;gap:8px;height:46px;padding:0 10px 0 14px;border-bottom:1px solid var(--line);background:var(--surface-glass);backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%)}
+.section-bar-links{flex:1;min-width:0;display:flex;gap:2px;overflow-x:auto;padding-inline:2px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
+.section-bar-links::-webkit-scrollbar{display:none}
+.section-bar-links a{position:relative;flex:none;display:inline-flex;align-items:center;min-height:34px;padding:0 11px;border-radius:999px;color:var(--muted);font:600 11px var(--mono);letter-spacing:.03em;text-decoration:none}
+.section-bar-links a span{position:relative}
+.section-bar-links a.is-active{color:var(--text)}
+.section-bar-pill{position:absolute;inset:0;border:1px solid color-mix(in srgb,var(--cyan) 40%,var(--line));border-radius:inherit;background:color-mix(in srgb,var(--cyan) 10%,transparent)}
+.section-bar-density{flex:none;min-height:34px;padding:0 11px;border:1px solid var(--line-strong);border-radius:999px;background:var(--bg-elevated);color:var(--text);font:600 11px var(--mono);cursor:pointer}
+.section-bar-density[aria-pressed="true"]{border-color:color-mix(in srgb,var(--cyan) 45%,var(--line));color:var(--cyan)}
+
+@media (max-width:720px){
+  /* Anchor jumps land below header + section bar. */
+  html{scroll-padding-top:calc(var(--header-h) + 60px)}
+  .rail-item,.current-role{scroll-margin-top:calc(var(--header-h) + 60px)}
+}
+
+/* ---- Fold mechanics ------------------------------------------------------ */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;min-height:44px;margin-top:10px;padding:0 14px;border:1px solid var(--line-strong);border-radius:999px;background:transparent;color:var(--text-soft);font:600 11px var(--mono);letter-spacing:.03em;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fold-toggle:hover,.fold-toggle[aria-expanded="true"]{border-color:color-mix(in srgb,var(--cyan) 45%,var(--line));color:var(--text)}
+.fold-toggle svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+@media screen{
+  [data-density="compact"] [data-fold="closed"] .fold-detail{display:none!important}
+  [data-density="compact"] [data-fold="open"] .fold-detail{animation:foldIn .36s cubic-bezier(.22,.61,.36,1) both}
+
+  /* ---- Rhythm: tighter sections and headings ---------------------------- */
+  [data-density="compact"]{--section:2.75rem}
+  [data-density="compact"] .section-heading{margin-bottom:20px}
+  [data-density="compact"] .section-heading h2{font-size:clamp(1.85rem,8.4vw,2.5rem)}
+  [data-density="compact"] .section-heading>p:not(.eyebrow){margin-top:10px;font-size:.92rem}
+
+  /* ---- Hero: the pipeline collapses to a one-line stage strip ----------- */
+  [data-density="compact"] .hero{padding-top:calc(var(--header-h) + 34px);padding-bottom:28px}
+  [data-density="compact"] .hero-actions{margin-top:22px}
+  [data-density="compact"] .metric-row{margin-top:22px}
+  [data-density="compact"] .pipeline{max-width:none;margin-top:22px;border-radius:16px;box-shadow:none}
+  [data-density="compact"] .pipeline-bar{padding:9px 12px}
+  [data-density="compact"] .pipeline-stages{display:flex;flex-wrap:wrap;align-items:center;gap:6px 4px;padding:12px}
+  [data-density="compact"] .pipeline-stages li{display:inline-flex;margin:0!important;padding:5px 8px;border-color:var(--line)}
+  [data-density="compact"] .pipeline-stages li:not(:last-child)::after{content:"→";position:static;width:auto;height:auto;margin-left:8px;background:none;color:var(--muted);font:500 10px var(--mono)}
+  [data-density="compact"] .pipeline-stages b{font-size:10px;letter-spacing:.08em}
+  [data-density="compact"] .pipeline-index,[data-density="compact"] .pipeline-stages small,[data-density="compact"] .pipeline-console{display:none}
+
+  /* ---- Projects: the pitch and the proof; the rest lives in the sheet --- */
+  [data-density="compact"] .projects-grid{gap:10px}
+  [data-density="compact"] .project-status,
+  [data-density="compact"] .project-approach,
+  [data-density="compact"] .project-body>.project-tech{display:none}
+  [data-density="compact"] .project-body{padding:18px}
+  [data-density="compact"] .project-card h3{margin-top:10px;font-size:1.45rem}
+  [data-density="compact"] .project-card.is-featured h3{font-size:1.7rem}
+  [data-density="compact"] .project-value{margin-top:8px;font-size:.92rem;line-height:1.55}
+  [data-density="compact"] .project-impact{margin-top:14px}
+  [data-density="compact"] .project-open{margin-top:14px}
+  /* One primary CTA per screen: only the featured tile keeps the solid button. */
+  [data-density="compact"] .project-card:not(.is-featured) .project-open{min-height:44px;border:1px solid var(--line-strong);background:transparent;color:var(--text)}
+
+  /* ---- Career: headline per role, detail on tap ------------------------- */
+  [data-density="compact"] .career-ribbon{margin-bottom:18px}
+  [data-density="compact"] .current-role{gap:16px;padding:18px}
+  [data-density="compact"] .current-status{margin-bottom:12px}
+  [data-density="compact"] .current-head h3{font-size:1.45rem}
+  [data-density="compact"] .role-summary{margin-top:8px;font-size:.9rem;line-height:1.6}
+  [data-density="compact"] .tenure-feature{padding:14px}
+  [data-density="compact"] .tenure-highlights{gap:6px;margin-top:12px}
+  [data-density="compact"] [data-fold="closed"] .tenure-highlights article{flex-direction:row;align-items:baseline;gap:10px;padding:10px 12px}
+  [data-density="compact"] [data-fold="closed"] .highlight-metric{font-size:1.1rem}
+  [data-density="compact"] .current-fold{margin-top:0}
+  [data-density="compact"] .career-rail{margin-top:26px}
+  [data-density="compact"] .rail-item{padding-bottom:12px}
+  [data-density="compact"] .rail-card{grid-template-columns:minmax(0,1fr) auto;gap:12px;padding:14px}
+  [data-density="compact"] .rail-copy{display:flex;flex-direction:column}
+  [data-density="compact"] .rail-card .fold-toggle{min-height:36px;margin-top:8px;padding:0 12px}
+  [data-density="compact"] .impact-stat{justify-items:end;min-width:0;padding:0 0 0 12px;border-top:0;border-left:1px solid var(--line);text-align:right}
+  [data-density="compact"] .impact-stat strong{font-size:1.35rem}
+  [data-density="compact"] .impact-stat small{max-width:11ch;font-size:8px}
+
+  /* ---- Stack: lead tools, "+N more" -------------------------------------- */
+  [data-density="compact"] .stack-grid{gap:8px}
+  [data-density="compact"] .stack-card{padding:16px}
+  [data-density="compact"] .stack-card h3{margin-top:6px;font-size:1.1rem}
+  [data-density="compact"] .stack-card ul{margin-top:12px}
+  [data-density="compact"] .stack-card .fold-toggle{min-height:36px;margin-top:10px;padding:0 12px}
+
+  /* ---- Open source: featured repo, then a swipe row that peeks ---------- */
+  [data-density="compact"] .github-panel{padding:18px}
+  [data-density="compact"] .gh-summary{margin-top:16px}
+  [data-density="compact"] .github-grid{display:flex;gap:10px;margin-inline:-18px;padding:0 18px 4px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:18px;scrollbar-width:none;touch-action:pan-x pan-y}
+  [data-density="compact"] .github-grid::-webkit-scrollbar{display:none}
+  [data-density="compact"] .github-grid li{flex:0 0 78%;scroll-snap-align:start}
+  [data-density="compact"] .gh-swipe-hint{display:block;margin-top:8px;color:var(--muted);font:500 10px var(--mono);letter-spacing:.04em}
+
+  /* ---- Education + contact ---------------------------------------------- */
+  [data-density="compact"] .education-card{padding:18px}
+  [data-density="compact"] .education-card h2{font-size:1.5rem}
+  [data-density="compact"] .contact-inner h2{font-size:clamp(2rem,9.5vw,2.8rem)}
+  [data-density="compact"] .social-links{margin-top:20px}
+}
+
+@keyframes foldIn{from{opacity:0;translate:0 -6px}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:reduce){[data-density="compact"] [data-fold="open"] .fold-detail{animation:none}}
+@media print{.section-bar,.fold-toggle,.gh-swipe-hint{display:none!important}}

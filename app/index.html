@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Abhilash Sharma builds quality platforms, test observability systems, and production reliability tooling with Kiro, Amazon Bedrock, AgentCore, and MCP.">
-  <meta name="theme-color" content="#07111d">
+  <meta name="theme-color" content="#050505">
   <meta name="color-scheme" content="dark light">
   <link rel="canonical" href="https://elixirautomation.github.io/">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -19,8 +19,7 @@
   <script>
     (() => {
       const saved = localStorage.getItem('portfolio-theme');
-      const preferred = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-      document.documentElement.dataset.theme = saved || preferred;
+      document.documentElement.dataset.theme = saved === 'light' ? 'light' : 'dark';
     })();
   </script>
   <script type="application/ld+json">
