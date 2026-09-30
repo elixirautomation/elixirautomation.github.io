@@ -30,6 +30,28 @@ function LanguageBar({ languages }: { languages: GitHubSnapshot['languages'] }) 
   );
 }
 
+type RepoCardModel = { name: string; surface: string; summary: string; language: string; href: string; stars: number; pushed: string | null };
+
+function RepoCard({ repo }: { repo: RepoCardModel }) {
+  return (
+    <a className="github-repo" href={repo.href} target="_blank" rel="noreferrer">
+      <span className="gh-surface">{repo.surface}</span>
+      <strong>{repo.name}</strong>
+      <p>{repo.summary}</p>
+      <span className="gh-meta">
+        {repo.language}
+        {repo.stars > 0 && (
+          <>
+            {' · '}
+            <StarIcon /> {repo.stars}
+          </>
+        )}
+        {repo.pushed && <> · pushed {repo.pushed}</>}
+      </span>
+    </a>
+  );
+}
+
 export function GitHubSection() {
   const state = useGitHubProfile(profile.githubUser);
   const live = state.status === 'ready' ? state.data : null;
@@ -49,6 +71,8 @@ export function GitHubSection() {
         pushed: api ? dateFormat.format(new Date(api.pushed_at)) : null,
       };
     });
+
+  const [featured, ...frameworks] = cards;
 
   return (
     <section className="section section-shell github-section" id="github" aria-labelledby="github-title">
@@ -89,27 +113,22 @@ export function GitHubSection() {
           )
         )}
 
-        <ul className="github-grid">
-          {cards.map((repo, index) => (
-            <li key={repo.name} className={index === 0 ? 'is-featured' : undefined}>
-              <a className="github-repo" href={repo.href} target="_blank" rel="noreferrer">
-                <span className="gh-surface">{repo.surface}</span>
-                <strong>{repo.name}</strong>
-                <p>{repo.summary}</p>
-                <span className="gh-meta">
-                  {repo.language}
-                  {repo.stars > 0 && (
-                    <>
-                      {' · '}
-                      <StarIcon /> {repo.stars}
-                    </>
-                  )}
-                  {repo.pushed && <> · pushed {repo.pushed}</>}
-                </span>
-              </a>
+        {featured && (
+          <div className="github-featured">
+            <RepoCard repo={featured} />
+          </div>
+        )}
+        {/* A plain grid on wide screens; on phones a swipe row whose next card peeks in. */}
+        <ul className="github-grid" aria-label="Automation frameworks">
+          {frameworks.map((repo) => (
+            <li key={repo.name}>
+              <RepoCard repo={repo} />
             </li>
           ))}
         </ul>
+        <p className="gh-swipe-hint" aria-hidden="true">
+          Swipe for all {frameworks.length} frameworks
+        </p>
 
         {state.status === 'error' && (
           <p className="github-note">Live stats are unavailable right now (GitHub rate-limits anonymous visitors); repository links still work.</p>

@@ -10,6 +10,8 @@ import { StackSection } from './components/StackSection';
 import { EducationSection, ContactSection, SiteFooter } from './components/MiscSections';
 import { CommandPalette } from './components/CommandPalette';
 import { VercelAnalytics } from './components/VercelAnalytics';
+import { SectionBar } from './components/SectionBar';
+import { DensityProvider } from './components/DensityProvider';
 import { useTheme } from './hooks/useTheme';
 import { usePointerEffects } from './hooks/usePointerEffects';
 import { useToast } from './hooks/useToast';
@@ -53,6 +55,7 @@ export default function App() {
   return (
     // One reduced-motion policy for every motion component on the page.
     <MotionConfig reducedMotion="user">
+      <DensityProvider>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -60,6 +63,7 @@ export default function App() {
       <div className="cursor-glow" aria-hidden="true"></div>
 
       <SiteHeader theme={theme} onToggleTheme={toggleTheme} onOpenCommandPalette={openCommandPalette} onPrint={handlePrint} />
+      <SectionBar />
 
       <main id="main-content">
         <HeroSection />
@@ -86,6 +90,7 @@ export default function App() {
       </div>
 
       <VercelAnalytics />
+      </DensityProvider>
     </MotionConfig>
   );
 }

@@ -12,6 +12,8 @@ import { careerRoles } from '../content/careerRoles';
 import type { CareerRole, EmbeddedProject, RoleImpact } from '../content/types';
 import { useCountUp } from '../hooks/useCountUp';
 import { endIndex, formatRange, formatTenure, tenureMonths, toMonthIndex } from '../utils/tenure';
+import { useFold } from '../hooks/useDensity';
+import { FoldToggle } from './FoldToggle';
 import { Reveal } from './Reveal';
 import './ExperienceSection.css';
 
@@ -164,18 +166,18 @@ function EmbeddedProjectView({ project }: { project: EmbeddedProject }) {
       <motion.div className="tenure-title" variants={rise}>
         <small>{project.eyebrow}</small>
         <h4>{project.title}</h4>
-        <p>{project.description}</p>
+        <p className="fold-detail">{project.description}</p>
       </motion.div>
       <div className="tenure-highlights">
         {project.highlights.map((highlight) => (
           <motion.article key={highlight.title} variants={rise} whileHover={{ y: -3 }} transition={{ duration: 0.2 }}>
             {highlight.metric && <b className="highlight-metric">{highlight.metric}</b>}
             <strong>{highlight.title}</strong>
-            <span>{highlight.description}</span>
+            <span className="fold-detail">{highlight.description}</span>
           </motion.article>
         ))}
       </div>
-      <motion.div variants={rise}>
+      <motion.div variants={rise} className="fold-detail">
         <DeliveryLoop steps={project.deliveryLoop} />
       </motion.div>
     </motion.div>
@@ -184,8 +186,10 @@ function EmbeddedProjectView({ project }: { project: EmbeddedProject }) {
 
 function CurrentRole({ role, hover }: { role: CareerRole; hover: Hover }) {
   const reduce = useReducedMotion();
+  const fold = useFold();
   return (
     <motion.article
+      {...fold.foldProps}
       id={`role-${role.id}`}
       className={`current-role${hover.id === role.id ? ' is-linked' : ''}`}
       aria-labelledby={`role-title-${role.id}`}
@@ -208,7 +212,7 @@ function CurrentRole({ role, hover }: { role: CareerRole; hover: Hover }) {
         </p>
         <p className="role-summary">{role.summary}</p>
         {role.tags && (
-          <ul className="tag-row" aria-label="Focus areas">
+          <ul className="tag-row fold-detail" aria-label="Focus areas">
             {role.tags.map((tag) => (
               <li key={tag}>{tag}</li>
             ))}
@@ -216,6 +220,7 @@ function CurrentRole({ role, hover }: { role: CareerRole; hover: Hover }) {
         )}
       </motion.header>
       {role.embeddedProject && <EmbeddedProjectView project={role.embeddedProject} />}
+      {fold.showToggle && <FoldToggle open={fold.open} onToggle={fold.toggle} label="Sentinel details" className="current-fold" />}
     </motion.article>
   );
 }
@@ -242,8 +247,10 @@ function ImpactStat({ impact }: { impact: RoleImpact }) {
 
 function PastRole({ role, hover }: { role: CareerRole; hover: Hover }) {
   const reduce = useReducedMotion();
+  const fold = useFold();
   return (
     <motion.li
+      {...fold.foldProps}
       id={`role-${role.id}`}
       className={`rail-item${hover.id === role.id ? ' is-linked' : ''}`}
       initial={reduce ? false : 'hidden'}
@@ -269,8 +276,9 @@ function PastRole({ role, hover }: { role: CareerRole; hover: Hover }) {
         <div className="rail-copy">
           <span className="role-company">{role.company}</span>
           <h3 id={`role-title-${role.id}`}>{role.title}</h3>
-          <p className="role-meta">{role.location}</p>
-          <p className="role-summary">{role.summary}</p>
+          <p className="role-meta fold-detail">{role.location}</p>
+          <p className="role-summary fold-detail">{role.summary}</p>
+          {fold.showToggle && <FoldToggle open={fold.open} onToggle={fold.toggle} label="role details" />}
         </div>
         {role.impact && <ImpactStat impact={role.impact} />}
       </motion.article>

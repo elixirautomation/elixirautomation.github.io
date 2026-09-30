@@ -28,21 +28,22 @@
 /* Curated repos: System One leads, frameworks follow. */
 .github-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 0;padding:0;list-style:none}
 .github-grid li{display:flex;min-width:0}
-.github-grid li.is-featured{grid-column:1/-1}
 .github-repo{flex:1;display:flex;flex-direction:column;gap:6px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--bg-elevated);text-decoration:none;transition:border-color .2s,translate .2s}
 .github-repo:hover{translate:0 -2px;border-color:color-mix(in srgb,var(--cyan) 45%,var(--line))}
-.is-featured .github-repo{border-color:color-mix(in srgb,var(--cyan) 30%,var(--line));background:radial-gradient(ellipse 70% 90% at 0% 0%,color-mix(in srgb,var(--cyan) 7%,transparent),transparent 70%),var(--bg-elevated)}
+.github-featured{display:flex;margin-top:10px}
+.github-featured .github-repo{border-color:color-mix(in srgb,var(--cyan) 30%,var(--line));background:radial-gradient(ellipse 70% 90% at 0% 0%,color-mix(in srgb,var(--cyan) 7%,transparent),transparent 70%),var(--bg-elevated)}
 .gh-surface{color:var(--cyan);font:600 9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .github-repo strong{font:600 .86rem var(--mono);overflow-wrap:anywhere}
 .github-repo p{color:var(--text-soft);font-size:.84rem;line-height:1.55}
 .gh-meta{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;margin-top:auto;padding-top:6px;color:var(--muted);font:500 10px var(--mono)}
 .gh-meta .icon{width:11px;height:11px}
+.gh-swipe-hint{display:none}
 .github-note{margin-top:14px;color:var(--muted);font-size:.84rem}
 @keyframes ghShimmer{to{background-position:-200% 0}}
 
 @media (max-width:900px){.gh-summary{grid-template-columns:1fr}.github-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){
-  .github-grid{grid-template-columns:1fr}.github-grid li.is-featured{grid-column:auto}
+  .github-grid{grid-template-columns:1fr}
   .github-stats li{padding:12px}.github-stats strong{font-size:1.35rem}.github-stats span{font-size:8px;letter-spacing:.04em}
 }
 @media (prefers-reduced-motion:reduce){.gh-summary-skeleton{animation:none}.github-repo{transition:none}}
