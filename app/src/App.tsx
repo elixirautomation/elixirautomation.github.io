@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { MotionConfig } from 'motion/react';
 import { SiteHeader } from './components/SiteHeader';
 import { HeroSection } from './components/HeroSection';
 import { ProjectsSection } from './components/ProjectsSection';
@@ -10,7 +11,6 @@ import { EducationSection, ContactSection, SiteFooter } from './components/MiscS
 import { CommandPalette } from './components/CommandPalette';
 import { VercelAnalytics } from './components/VercelAnalytics';
 import { useTheme } from './hooks/useTheme';
-import { useScrollReveal } from './hooks/useScrollReveal';
 import { usePointerEffects } from './hooks/usePointerEffects';
 import { useToast } from './hooks/useToast';
 
@@ -21,7 +21,6 @@ export default function App() {
   const { message: toastMessage, showToast } = useToast();
   const [commandOpen, setCommandOpen] = useState(false);
 
-  useScrollReveal();
   usePointerEffects();
 
   const openCommandPalette = useCallback(() => setCommandOpen(true), []);
@@ -52,7 +51,8 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    // One reduced-motion policy for every motion component on the page.
+    <MotionConfig reducedMotion="user">
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -86,6 +86,6 @@ export default function App() {
       </div>
 
       <VercelAnalytics />
-    </>
+    </MotionConfig>
   );
 }

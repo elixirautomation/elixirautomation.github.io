@@ -14,8 +14,10 @@ export interface GitHubSnapshot {
   publicRepos: number;
   followers: number;
   ownRepos: number;
+  stars: number;
   languages: { name: string; count: number }[];
-  recent: GitHubRepo[];
+  /** Original (non-fork) repos, most recently pushed first. */
+  repos: GitHubRepo[];
 }
 
 type State = { status: 'loading' } | { status: 'ready'; data: GitHubSnapshot } | { status: 'error' };
@@ -30,8 +32,17 @@ function summarise(user: { public_repos: number; followers: number }, repos: Git
     publicRepos: user.public_repos,
     followers: user.followers,
     ownRepos: own.length,
+    stars: own.reduce((sum, repo) => sum + repo.stargazers_count, 0),
     languages: [...counts].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count).slice(0, 5),
-    recent: own.slice(0, 6),
+    repos: own.map(({ name, description, html_url, language, stargazers_count, pushed_at, fork }) => ({
+      name,
+      description,
+      html_url,
+      language,
+      stargazers_count,
+      pushed_at,
+      fork,
+    })),
   };
 }
 
@@ -43,7 +54,7 @@ export function useGitHubProfile(username: string): State {
   const [state, setState] = useState<State>({ status: 'loading' });
 
   useEffect(() => {
-    const cacheKey = `gh-snapshot:${username}`;
+    const cacheKey = `gh-snapshot:v2:${username}`;
     try {
       const cached = JSON.parse(sessionStorage.getItem(cacheKey) ?? 'null') as { at: number; data: GitHubSnapshot } | null;
       if (cached && Date.now() - cached.at < CACHE_TTL_MS) {

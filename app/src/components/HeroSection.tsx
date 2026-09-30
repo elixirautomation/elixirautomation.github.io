@@ -2,15 +2,18 @@ import { profile } from '../content/profile';
 import { useRotatingText } from '../hooks/useRotatingText';
 import { AgentPipeline } from './AgentPipeline';
 import { HeroMetrics } from './HeroMetrics';
+import { ArrowDownRightIcon } from './Icons';
+import { Reveal } from './Reveal';
 
-const ROTATING_WORDS = ['observable.', 'explainable.', 'resilient.', 'scalable.'];
+// Plays once (~3.6 s) and settles on the headline word, so it never loops forever.
+const ROTATING_WORDS = ['explainable.', 'resilient.', 'scalable.', 'observable.'];
 
 export function HeroSection() {
-  const rotatingWord = useRotatingText(ROTATING_WORDS, 2800);
+  const rotatingWord = useRotatingText(ROTATING_WORDS, 1200, { once: true });
 
   return (
     <section className="hero section-shell" id="home" aria-labelledby="hero-title">
-      <div className="hero-copy reveal">
+      <Reveal className="hero-copy">
         <div className="availability">
           <span className="pulse" aria-hidden="true"></span>
           {profile.currentFocus}
@@ -27,14 +30,14 @@ export function HeroSection() {
         <p className="hero-summary">{profile.positioning}</p>
         <div className="hero-actions">
           <a className="button button-primary" href="#projects">
-            Explore projects <span aria-hidden="true">↘</span>
+            Explore projects <ArrowDownRightIcon />
           </a>
           <a className="button button-secondary" href="#contact">
             Get in touch
           </a>
         </div>
         <HeroMetrics />
-      </div>
+      </Reveal>
       <AgentPipeline />
     </section>
   );

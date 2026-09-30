@@ -1,79 +1,120 @@
 import { profile } from '../content/profile';
-import { projects } from '../content/projects';
-import { useGitHubProfile } from '../hooks/useGitHubProfile';
+import { openSourceRepos, PORTFOLIO_REPO } from '../content/openSource';
+import { useGitHubProfile, type GitHubSnapshot } from '../hooks/useGitHubProfile';
+import { ArrowUpRightIcon, StarIcon } from './Icons';
+import { Reveal } from './Reveal';
 import './GitHubSection.css';
-
-/** Repos already featured as project case studies are not repeated here. */
-const featured = new Set(projects.flatMap((project) => project.links.map((link) => link.href.toLowerCase())));
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: 'short', year: 'numeric' });
 
+/** Stacked share bar: one row that encodes the language mix as proportions. */
+function LanguageBar({ languages }: { languages: GitHubSnapshot['languages'] }) {
+  const total = languages.reduce((sum, language) => sum + language.count, 0) || 1;
+  return (
+    <div className="gh-langs">
+      <span className="gh-label">Languages across original repos</span>
+      <div className="gh-lang-bar" aria-hidden="true">
+        {languages.map((language, index) => (
+          <i key={language.name} style={{ flexGrow: language.count, ['--lang-tone' as string]: index }} />
+        ))}
+      </div>
+      <ul className="gh-lang-legend">
+        {languages.map((language, index) => (
+          <li key={language.name} style={{ ['--lang-tone' as string]: index }}>
+            <b aria-hidden="true" />
+            {language.name} <span>{Math.round((language.count / total) * 100)}%</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function GitHubSection() {
   const state = useGitHubProfile(profile.githubUser);
+  const live = state.status === 'ready' ? state.data : null;
+  const byName = new Map((live?.repos ?? []).map((repo) => [repo.name.toLowerCase(), repo]));
+
+  // Curated order and copy; live stars/language/push date win when available.
+  const cards = openSourceRepos
+    .filter((repo) => repo.name !== PORTFOLIO_REPO)
+    .map((repo) => {
+      const api = byName.get(repo.name.toLowerCase());
+      return {
+        ...repo,
+        href: api?.html_url ?? `${profile.links.github}/${repo.name}`,
+        stars: api?.stargazers_count ?? repo.stars,
+        // Curated language wins: GitHub's detector labels some Java repos as HTML.
+        language: repo.language,
+        pushed: api ? dateFormat.format(new Date(api.pushed_at)) : null,
+      };
+    });
 
   return (
     <section className="section section-shell github-section" id="github" aria-labelledby="github-title">
-      <div className="github-panel reveal">
+      <Reveal className="github-panel">
         <div className="github-head">
           <div>
-            <p className="eyebrow">GitHub activity</p>
-            <h2 id="github-title">Open work, live from the API.</h2>
+            <p className="eyebrow">Open source</p>
+            <h2 id="github-title">Decision systems and the automation frameworks behind them.</h2>
           </div>
+          <a className="gh-profile-link" href={profile.links.github} target="_blank" rel="noreferrer">
+            All repositories <ArrowUpRightIcon />
+          </a>
         </div>
 
-        {state.status === 'loading' && (
-          <div className="github-grid" aria-busy="true">
-            <span className="sr-only">Loading GitHub activity…</span>
-            {[0, 1, 2].map((key) => (
-              <div className="github-skeleton" key={key} aria-hidden="true"></div>
-            ))}
-          </div>
-        )}
-
-        {state.status === 'error' && (
-          <p className="github-error">GitHub’s API is unavailable right now (it rate-limits anonymous visitors). The GitHub link in the contact section still works.</p>
-        )}
-
-        {state.status === 'ready' && (
-          <>
+        {live ? (
+          <div className="gh-summary">
             <ul className="github-stats">
               <li>
-                <strong>{state.data.publicRepos}</strong>
-                <span>public repositories</span>
+                <strong>{live.ownRepos}</strong>
+                <span>original repos</span>
               </li>
               <li>
-                <strong>{state.data.ownRepos}</strong>
-                <span>original (non-fork)</span>
+                <strong>{live.stars}</strong>
+                <span>stars earned</span>
               </li>
               <li>
-                <strong>{state.data.followers}</strong>
+                <strong>{live.followers}</strong>
                 <span>followers</span>
               </li>
-              <li className="github-langs">
-                <span>Top languages</span>
-                <div>
-                  {state.data.languages.map((language) => (
-                    <b key={language.name}>
-                      {language.name} <i>{language.count}</i>
-                    </b>
-                  ))}
-                </div>
-              </li>
             </ul>
-            <div className="github-grid">
-              {state.data.recent.filter((repo) => !featured.has(repo.html_url.toLowerCase())).slice(0, 3).map((repo) => (
-                <a className="github-repo" key={repo.name} href={repo.html_url} target="_blank" rel="noreferrer">
-                  <strong>{repo.name}</strong>
-                  <p>{repo.description ?? 'No description.'}</p>
-                  <span>
-                    {repo.language ?? '—'} · pushed {dateFormat.format(new Date(repo.pushed_at))}
-                  </span>
-                </a>
-              ))}
+            <LanguageBar languages={live.languages} />
+          </div>
+        ) : (
+          state.status === 'loading' && (
+            <div className="gh-summary gh-summary-skeleton" aria-busy="true">
+              <span className="sr-only">Loading live GitHub stats…</span>
             </div>
-          </>
+          )
         )}
-      </div>
+
+        <ul className="github-grid">
+          {cards.map((repo, index) => (
+            <li key={repo.name} className={index === 0 ? 'is-featured' : undefined}>
+              <a className="github-repo" href={repo.href} target="_blank" rel="noreferrer">
+                <span className="gh-surface">{repo.surface}</span>
+                <strong>{repo.name}</strong>
+                <p>{repo.summary}</p>
+                <span className="gh-meta">
+                  {repo.language}
+                  {repo.stars > 0 && (
+                    <>
+                      {' · '}
+                      <StarIcon /> {repo.stars}
+                    </>
+                  )}
+                  {repo.pushed && <> · pushed {repo.pushed}</>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {state.status === 'error' && (
+          <p className="github-note">Live stats are unavailable right now (GitHub rate-limits anonymous visitors); repository links still work.</p>
+        )}
+      </Reveal>
     </section>
   );
 }

@@ -28,7 +28,7 @@ export const commands: CommandEntry[] = [
   { group: 'Navigate', icon: '◆', label: 'View projects', target: '#projects' },
   { group: 'Navigate', icon: '↗', label: 'View experience', target: '#experience' },
   { group: 'Navigate', icon: '◇', label: 'Technology stack', target: '#stack' },
-  { group: 'Navigate', icon: '⎇', label: 'GitHub activity', target: '#github' },
+  { group: 'Navigate', icon: '⎇', label: 'Open source work', target: '#github' },
   { group: 'Navigate', icon: '@', label: 'Contact me', target: '#contact' },
   { group: 'Links', icon: '⎋', label: 'Open GitHub', href: profile.links.github },
   { group: 'Links', icon: '⎋', label: 'Open LinkedIn', href: profile.links.linkedin },

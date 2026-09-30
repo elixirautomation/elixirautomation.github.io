@@ -1,36 +1,50 @@
-import { useCallback, useState } from 'react';
+import { lazy, Suspense, useCallback, useState } from 'react';
+import { motion } from 'motion/react';
 import { projects, type ProjectCaseStudy } from '../content/projects';
 import { ArchitectureFlow } from './ArchitectureFlow';
-import { CaseStudyPanel } from './CaseStudyPanel';
-import { DeckCarousel } from './DeckCarousel';
+import { ArrowRightIcon } from './Icons';
+import { Reveal } from './Reveal';
 import './ProjectsSection.css';
 
+// Nobody sees the case study until they ask for it, so keep it (and the
+// Sentinel dashboard preview inside it) out of the initial bundle.
+const CaseStudyPanel = lazy(() => import('./CaseStudyPanel').then((module) => ({ default: module.CaseStudyPanel })));
+
 /**
- * Level 1 of the hierarchy: what it is, why it matters, the proof. Everything
- * else lives in the case study panel. `data-swiper-parallax*` offsets give the
- * layers depth as a slide moves (Swiper Parallax module).
+ * Level 1 of the hierarchy: what it is, why it matters, the proof. The
+ * featured project gets a wide tile with its architecture; the rest share a
+ * row, so every project is visible without paging.
  */
-function ProjectCard({ project, compact, onOpen }: { project: ProjectCaseStudy; compact: boolean; onOpen: () => void }) {
+function ProjectCard({ project, featured, onOpen }: { project: ProjectCaseStudy; featured: boolean; onOpen: () => void }) {
   return (
-    <article className="project-card" aria-labelledby={`project-${project.id}-title`}>
+    <motion.article
+      className={`project-card${featured ? ' is-featured' : ''}`}
+      aria-labelledby={`project-${project.id}-title`}
+      whileHover={{ y: -4 }}
+      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+    >
       <div className="project-body">
-        <div className="project-meta" data-swiper-parallax="-60" data-swiper-parallax-opacity="0.3">
+        <div className="project-meta">
           <span>Project {project.index}</span>
           <span>{project.category}</span>
-          <span className="project-status">
-            <i aria-hidden="true"></i>
-            {project.status}
-          </span>
         </div>
-        <h3 id={`project-${project.id}-title`} data-swiper-parallax="-120">
-          {project.name}
-        </h3>
-        <p className="project-value" data-swiper-parallax="-180">
-          {project.valueProp}
-        </p>
+        <span className="project-status">
+          <i aria-hidden="true"></i>
+          {project.status}
+        </span>
+        <h3 id={`project-${project.id}-title`}>{project.name}</h3>
+        <p className="project-value">{project.valueProp}</p>
 
-        {project.impact.length > 0 ? (
-          <div className="project-impact" aria-label="Impact" data-swiper-parallax="-240">
+        {!featured && (
+          <ul className="project-approach" aria-label="Approach">
+            {project.approach.slice(0, 2).map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ul>
+        )}
+
+        {project.impact.length > 0 && (
+          <div className={featured ? 'project-impact' : 'project-impact is-chip'} aria-label="Impact">
             {project.impact.map((entry) => (
               <div key={entry.label}>
                 <strong>{entry.value}</strong>
@@ -38,26 +52,22 @@ function ProjectCard({ project, compact, onOpen }: { project: ProjectCaseStudy; 
               </div>
             ))}
           </div>
-        ) : (
-          <p className="project-no-metrics" data-swiper-parallax="-240">
-            Outcome metrics not published
-          </p>
         )}
 
-        <div className="project-tech" aria-label="Technologies" data-swiper-parallax="-300">
-          {project.tech.slice(0, compact ? 4 : undefined).map((tech) => (
+        <div className="project-tech" aria-label="Technologies">
+          {project.tech.slice(0, featured ? undefined : 4).map((tech) => (
             <span key={tech}>{tech}</span>
           ))}
-          {compact && project.tech.length > 4 && <span>+{project.tech.length - 4}</span>}
+          {!featured && project.tech.length > 4 && <span>+{project.tech.length - 4}</span>}
         </div>
 
         <button className="project-open" type="button" onClick={onOpen} aria-haspopup="dialog">
-          Open case study <span aria-hidden="true">→</span>
+          Open case study <ArrowRightIcon />
         </button>
       </div>
 
-      {!compact && (
-        <div className="project-visual" data-swiper-parallax="30%" data-swiper-parallax-scale="0.9">
+      {featured && (
+        <div className="project-visual">
           <div className="project-visual-bar">
             <span>architecture</span>
             <span>{project.id}.flow</span>
@@ -65,32 +75,38 @@ function ProjectCard({ project, compact, onOpen }: { project: ProjectCaseStudy; 
           <ArchitectureFlow steps={project.architecture} label={`${project.name} architecture`} />
         </div>
       )}
-    </article>
+    </motion.article>
   );
 }
 
 export function ProjectsSection() {
   const [open, setOpen] = useState<ProjectCaseStudy | null>(null);
+  const [panelLoaded, setPanelLoaded] = useState(false);
   const close = useCallback(() => setOpen(null), []);
+  const openProject = (project: ProjectCaseStudy) => {
+    setPanelLoaded(true);
+    setOpen(project);
+  };
 
   return (
     <section className="section section-shell projects-section" id="projects" aria-labelledby="projects-title">
-      <div className="section-heading reveal">
+      <Reveal className="section-heading">
         <p className="eyebrow">Selected work</p>
         <h2 id="projects-title">Systems I have designed, built, and run.</h2>
-        <p>Each card is the summary. Open a case study for the problem, the architecture, and my role.</p>
+        <p>Each tile is the summary. Open a case study for the problem, the architecture, and my role.</p>
+      </Reveal>
+      <div className="projects-grid">
+        {projects.map((project, index) => (
+          <Reveal key={project.id} className={index === 0 ? 'projects-cell is-featured' : 'projects-cell'} delay={index === 0 ? 0 : (index - 1) * 0.07}>
+            <ProjectCard project={project} featured={index === 0} onOpen={() => openProject(project)} />
+          </Reveal>
+        ))}
       </div>
-      <div className="reveal">
-        <DeckCarousel
-          items={projects}
-          getKey={(project) => project.id}
-          noun="project"
-          label="Featured projects"
-          className="projects-deck"
-          renderSlide={(project, { compact }) => <ProjectCard project={project} compact={compact} onOpen={() => setOpen(project)} />}
-        />
-      </div>
-      <CaseStudyPanel project={open} onClose={close} />
+      {panelLoaded && (
+        <Suspense fallback={null}>
+          <CaseStudyPanel project={open} onClose={close} />
+        </Suspense>
+      )}
     </section>
   );
 }

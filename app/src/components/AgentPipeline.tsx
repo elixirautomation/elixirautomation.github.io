@@ -22,16 +22,24 @@ const AGENT_LOGS = [
 export function AgentPipeline() {
   const reducedMotion = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
-  const log = useRotatingText(AGENT_LOGS, 2400);
+  const log = useRotatingText(AGENT_LOGS, 1100, { once: true });
+  const settled = reducedMotion || active >= STAGES.length - 1;
 
+  // One pass through the loop (~3.6 s), then rest on ACTION. Nothing on the
+  // page auto-updates indefinitely.
   useEffect(() => {
     if (reducedMotion) return;
-    const timer = window.setInterval(() => setActive((current) => (current + 1) % STAGES.length), 1500);
+    const timer = window.setInterval(() => {
+      setActive((current) => {
+        if (current + 1 >= STAGES.length - 1) window.clearInterval(timer);
+        return Math.min(current + 1, STAGES.length - 1);
+      });
+    }, 900);
     return () => window.clearInterval(timer);
   }, [reducedMotion]);
 
   return (
-    <div className="pipeline reveal" aria-label="How I structure agent systems: agents, reasoning, tools, memory, action">
+    <div className={`pipeline${settled ? ' is-settled' : ''}`} aria-label="How I structure agent systems: agents, reasoning, tools, memory, action">
       <div className="pipeline-bar">
         <span className="pipeline-online">
           <i aria-hidden="true"></i>System online
@@ -40,7 +48,7 @@ export function AgentPipeline() {
       </div>
       <ol className="pipeline-stages">
         {STAGES.map((stage, index) => (
-          <li key={stage.key} className={!reducedMotion && index === active ? 'is-active' : undefined}>
+          <li key={stage.key} className={[index === (reducedMotion ? STAGES.length - 1 : active) ? 'is-active' : '', index < active || settled ? 'is-done' : ''].filter(Boolean).join(' ') || undefined}>
             <span className="pipeline-index">0{index + 1}</span>
             <b>{stage.key}</b>
             <small>{stage.detail}</small>

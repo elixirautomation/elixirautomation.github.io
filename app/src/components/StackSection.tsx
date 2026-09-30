@@ -1,23 +1,16 @@
-import type { StackCard as StackCardModel } from '../content/types';
 import { stackCards } from '../content/stackCards';
-import { DeckCarousel } from './DeckCarousel';
+import type { StackCard as StackCardModel } from '../content/types';
+import { Reveal } from './Reveal';
 import './StackSection.css';
 
-function StackCardView({ card, index, compact }: { card: StackCardModel; index: number; compact: boolean }) {
+function StackCardView({ card, index }: { card: StackCardModel; index: number }) {
   return (
-    <article className={`stack-card${compact ? ' is-square' : ''}`}>
-      <div className="stack-card-head">
-        <span className="stack-eyebrow" data-swiper-parallax="-60" data-swiper-parallax-opacity="0.3">
-          {String(index + 1).padStart(2, '0')} · {card.eyebrow}
-        </span>
-        <h3 data-swiper-parallax="-140">{card.title}</h3>
-        {!compact && (
-          <p className="stack-count" data-swiper-parallax="-200">
-            {card.tools.length} tools in regular use
-          </p>
-        )}
-      </div>
-      <ul data-swiper-parallax={compact ? '-220' : '25%'}>
+    <article className="stack-card" aria-labelledby={`stack-${index}-title`}>
+      <span className="stack-eyebrow">
+        {String(index + 1).padStart(2, '0')} · {card.eyebrow}
+      </span>
+      <h3 id={`stack-${index}-title`}>{card.title}</h3>
+      <ul aria-label={`${card.title} tools`}>
         {card.tools.map((tool) => (
           <li key={tool}>{tool}</li>
         ))}
@@ -26,22 +19,20 @@ function StackCardView({ card, index, compact }: { card: StackCardModel; index: 
   );
 }
 
+/** 4 groups × 6 short labels fit on one screen, so they are shown whole rather than paged. */
 export function StackSection() {
   return (
     <section className="section section-shell stack-section" id="stack" aria-labelledby="stack-title">
-      <div className="section-heading reveal">
+      <Reveal className="section-heading">
         <p className="eyebrow">Technology constellation</p>
         <h2 id="stack-title">Tools selected for outcomes, not trends.</h2>
-      </div>
-      <div className="reveal">
-        <DeckCarousel
-          items={stackCards}
-          getKey={(card) => card.title}
-          noun="stack group"
-          label="Technology stack"
-          className="stack-deck"
-          renderSlide={(card, { index, compact }) => <StackCardView card={card} index={index} compact={compact} />}
-        />
+      </Reveal>
+      <div className="stack-grid">
+        {stackCards.map((card, index) => (
+          <Reveal key={card.title} className="stack-cell" delay={index * 0.07}>
+            <StackCardView card={card} index={index} />
+          </Reveal>
+        ))}
       </div>
     </section>
   );

@@ -1,7 +1,8 @@
-.case-overlay{position:fixed;inset:0;z-index:180;display:flex;justify-content:flex-end;background:rgba(0,0,0,.62);backdrop-filter:blur(6px)}
-.case-panel{width:min(640px,100%);height:100%;display:flex;flex-direction:column;border-left:1px solid var(--line-strong);background:var(--surface);box-shadow:-30px 0 90px rgba(0,0,0,.5)}
+.case-overlay{position:fixed;inset:0;z-index:180;display:flex;justify-content:flex-end;background:rgba(var(--shadow-rgb),.62);backdrop-filter:blur(6px)}
+.case-panel{width:min(640px,100%);height:100%;display:flex;flex-direction:column;border-left:1px solid var(--line-strong);background:var(--surface);box-shadow:-30px 0 90px rgba(var(--shadow-rgb),.5)}
 .case-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-bottom:1px solid var(--line)}
 .case-close{display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--text-soft);font-size:14px;cursor:pointer}
+.case-close .icon{width:16px;height:16px}
 .case-close:hover{border-color:var(--line-strong);color:var(--text)}
 .case-body{flex:1;min-width:0;overflow-x:clip;overflow-y:auto;overscroll-behavior:contain;padding:22px 22px 40px}
 .case-body h3{font-size:clamp(1.9rem,4vw,2.6rem)}
@@ -15,7 +16,7 @@
 .case-block .product-window{width:100%;rotate:0deg;box-shadow:none}
 .case-block .product-window:hover{translate:none}
 .case-block .dashboard{min-height:0}
-.case-block .product-window,.case-block .dash-main,.case-block .dash-deck{min-width:0;max-width:100%}
+.case-block .product-window,.case-block .dash-main,.case-block .dash-tabs{min-width:0;max-width:100%}
 .case-body .project-tech{margin-top:26px}
 @media (max-width:720px){
   .case-overlay{align-items:flex-end}

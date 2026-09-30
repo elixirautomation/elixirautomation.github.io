@@ -9,6 +9,7 @@ export interface HeroMetric {
 export const heroMetrics: HeroMetric[] = [
   { value: 10, suffix: '+', label: 'years engineering' },
   { value: 3, suffix: '', label: 'years building agents' },
-  { value: 6, suffix: '', label: 'companies' },
-  { value: 4, suffix: '', label: 'featured systems' },
+  // Outcomes, not counts that repeat other sections. Both are published figures.
+  { value: 596, suffix: 'K+', label: 'test runs in Sentinel' },
+  { value: 75, suffix: '%', label: 'less manual test effort' },
 ];

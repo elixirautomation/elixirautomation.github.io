@@ -3,7 +3,7 @@ import { AnimatePresence, motion, useReducedMotion, type Variants } from 'motion
 import type { ProjectCaseStudy } from '../content/projects';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { ArchitectureFlow } from './ArchitectureFlow';
-import { GitHubIcon } from './Icons';
+import { ArrowUpRightIcon, CloseIcon, GitHubIcon } from './Icons';
 import { SentinelDashboard } from './SentinelDashboard';
 import './CaseStudyPanel.css';
 
@@ -87,7 +87,7 @@ export function CaseStudyPanel({ project, onClose }: CaseStudyPanelProps) {
                 <span>{project.category}</span>
               </div>
               <button ref={closeRef} className="case-close" type="button" onClick={onClose} aria-label="Close case study">
-                ✕
+                <CloseIcon />
               </button>
             </header>
 
@@ -143,7 +143,7 @@ export function CaseStudyPanel({ project, onClose }: CaseStudyPanelProps) {
                   {project.links.map((link) => (
                     <a key={link.href} className="project-link" href={link.href} target="_blank" rel="noreferrer">
                       <GitHubIcon />
-                      {link.label} <span aria-hidden="true">↗</span>
+                      {link.label} <ArrowUpRightIcon />
                     </a>
                   ))}
                 </motion.div>

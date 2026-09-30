@@ -1,18 +1,18 @@
 .stack-section{border-top:1px solid var(--line)}
-/* Opaque surface: stack slides overlap during deck transitions. */
-.stack-card{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:clamp(24px,4vw,56px);min-height:300px;padding:clamp(24px,3.4vw,44px);border:1px solid var(--line);border-radius:22px;background:linear-gradient(150deg,var(--surface-2),var(--surface) 62%);transition:border-color .4s ease}
-.swiper-slide-active>.stack-card{border-color:color-mix(in srgb,var(--cyan) 30%,var(--line))}
+.stack-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stack-cell{display:flex;min-width:0}
+.stack-card{flex:1;display:flex;flex-direction:column;padding:22px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(150deg,var(--surface-2),var(--surface) 62%);transition:border-color .25s ease}
+.stack-card:hover{border-color:color-mix(in srgb,var(--cyan) 40%,var(--line))}
 .stack-eyebrow{color:var(--cyan);font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase}
-.stack-card h3{margin-top:12px;font-size:clamp(1.8rem,3.2vw,2.7rem);line-height:1.1}
-.stack-count{margin-top:12px;color:var(--muted);font:500 11px var(--mono)}
-.stack-card ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0;list-style:none}
-.stack-card li{display:flex;align-items:center;min-height:46px;padding:0 14px;border:1px solid var(--line);border-radius:11px;background:var(--bg-elevated);color:var(--text-soft);font-size:.9rem}
+.stack-card h3{margin-top:10px;font-size:1.25rem;line-height:1.2}
+.stack-card ul{display:grid;gap:6px;margin:18px 0 0;padding:0;list-style:none}
+.stack-card li{padding:8px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg-elevated);color:var(--text-soft);font-size:.84rem;line-height:1.35}
 
-/* Phones: square tiles in the 3D stack, pills anchored to the bottom. */
-.stack-card.is-square{display:flex;flex-direction:column;align-items:stretch;gap:0;aspect-ratio:1;min-height:0;padding:20px}
-.stack-card.is-square h3{margin-top:8px;font-size:1.25rem;line-height:1.24}
-.stack-card.is-square ul{display:flex;flex-wrap:wrap;align-content:flex-end;gap:6px;margin-top:auto;padding-top:14px}
-.stack-card.is-square li{min-height:0;padding:5px 8px;border-radius:8px;font-size:.76rem}
-
+@media (max-width:1050px){.stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){
+  .stack-grid{grid-template-columns:1fr}
+  .stack-card ul{display:flex;flex-wrap:wrap}
+  .stack-card li{padding:5px 9px;font-size:.78rem}
+}
 @media (prefers-reduced-motion:reduce){.stack-card{transition:none}}
-@media print{.stack-card{grid-template-columns:1fr;min-height:0;padding:16px;break-inside:avoid;aspect-ratio:auto}.stack-card h3{font-size:13pt}}
+@media print{.stack-grid{grid-template-columns:1fr 1fr}.stack-card{break-inside:avoid}}

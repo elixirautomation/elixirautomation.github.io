@@ -1,0 +1,102 @@
+/* Career section: ribbon (magnitude) -> featured current role -> rail (order). */
+.career-section ol,
+.career-section ul{list-style:none;margin:0;padding:0}
+
+/* ---- Ribbon -------------------------------------------------------------- */
+.career-ribbon{margin-bottom:34px}
+.ribbon-track{display:flex;gap:4px;height:58px}
+.ribbon-track li{min-width:22px;transform-origin:left center}
+.ribbon-track a{position:relative;display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-decoration:none;border-radius:10px}
+.ribbon-bar{display:block;height:10px;border-radius:999px;background:color-mix(in srgb,var(--text) 14%,transparent);transition:background .25s ease,height .25s ease,box-shadow .25s ease}
+.ribbon-track .is-current .ribbon-bar{background:linear-gradient(90deg,var(--cyan),var(--blue))}
+.ribbon-track .is-linked .ribbon-bar,.ribbon-track a:hover .ribbon-bar{height:14px;background:color-mix(in srgb,var(--cyan) 70%,transparent);box-shadow:0 0 18px color-mix(in srgb,var(--cyan) 35%,transparent)}
+.ribbon-label{position:absolute;left:2px;bottom:20px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font:600 10px var(--mono);letter-spacing:.03em;transition:color .25s ease}
+.ribbon-track .is-current .ribbon-label,.ribbon-track .is-linked .ribbon-label{color:var(--text)}
+.ribbon-axis{position:relative;height:18px;margin-top:8px;border-top:1px solid var(--line)}
+.ribbon-axis span{position:absolute;top:5px;translate:-50% 0;color:var(--muted);font:500 9px var(--mono)}
+.ribbon-axis span::before{content:"";position:absolute;left:50%;top:-6px;width:1px;height:4px;background:var(--line-strong)}
+
+/* ---- Shared role typography -------------------------------------------- */
+.role-company{display:block;color:var(--cyan);font:600 10px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.career-section h3{margin-top:6px;font-size:clamp(1.2rem,2vw,1.5rem)}
+.role-meta{margin-top:6px;color:var(--muted);font:500 11px var(--mono)}
+.role-meta i{margin-inline:4px;font-style:normal}
+.role-summary{margin-top:12px;color:var(--text-soft);font-size:.95rem;line-height:1.7}
+.career-section .tag-row li{padding:5px 8px;border:1px solid var(--line);border-radius:7px;color:var(--muted);background:color-mix(in srgb,var(--surface) 64%,transparent);font:600 10px var(--mono)}
+
+/* ---- Current role ------------------------------------------------------- */
+.current-role{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,48px);padding:clamp(22px,3vw,34px);border:1px solid color-mix(in srgb,var(--cyan) 34%,var(--line));border-radius:var(--radius);background:radial-gradient(ellipse 60% 80% at 0% 0%,color-mix(in srgb,var(--cyan) 8%,transparent),transparent 70%),linear-gradient(145deg,var(--surface),color-mix(in srgb,var(--surface-2) 70%,transparent));box-shadow:0 24px 70px color-mix(in srgb,var(--cyan) 8%,transparent);scroll-margin-top:calc(var(--header-h) + 24px);transition:border-color .3s ease,box-shadow .3s ease}
+.current-role.is-linked{border-color:color-mix(in srgb,var(--cyan) 60%,var(--line));box-shadow:0 28px 80px color-mix(in srgb,var(--cyan) 14%,transparent)}
+.current-status{display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface-glass);color:var(--text-soft);font:600 10px var(--mono);letter-spacing:.03em}
+.current-head h3{font-size:clamp(1.6rem,3vw,2.2rem)}
+
+.tenure-feature{min-width:0;padding:clamp(16px,2vw,22px);border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--bg-elevated) 76%,transparent)}
+.tenure-title small{display:block;color:var(--cyan);font:700 9px var(--mono);letter-spacing:.09em;text-transform:uppercase}
+.tenure-title h4{margin:6px 0 0;color:var(--text);font-size:1.08rem;line-height:1.3;letter-spacing:-.02em}
+.tenure-title p{margin-top:8px;color:var(--text-soft);font-size:.88rem}
+.tenure-highlights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}
+.tenure-highlights article{display:flex;flex-direction:column;gap:6px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);transition:border-color .2s ease}
+.tenure-highlights article:hover{border-color:var(--line-strong)}
+.highlight-metric{color:var(--cyan);font-size:1.5rem;line-height:1;letter-spacing:-.04em}
+.tenure-highlights strong{font-size:.84rem}
+.tenure-highlights span{color:var(--text-soft);font-size:.8rem;line-height:1.55}
+
+/* Delivery loop stepper */
+.delivery-loop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) 30px;align-items:stretch;gap:6px;margin-top:14px}
+.delivery-loop li{position:relative;display:grid;gap:3px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;color:var(--muted);font:700 9px var(--mono);letter-spacing:.06em;text-transform:uppercase;isolation:isolate;transition:color .3s ease,border-color .3s ease}
+.delivery-loop li.is-lit{color:var(--cyan);border-color:color-mix(in srgb,var(--cyan) 38%,var(--line))}
+.loop-index{color:var(--muted);font-weight:500;font-size:8px}
+.loop-indicator{position:absolute;inset:-1px;z-index:-1;border-radius:10px;background:color-mix(in srgb,var(--cyan) 14%,transparent);box-shadow:0 0 22px color-mix(in srgb,var(--cyan) 22%,transparent)}
+.delivery-loop .loop-return{display:grid;place-items:center;padding:0;border-style:dashed}
+.loop-return svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.delivery-loop.is-settled .loop-return{color:var(--cyan)}
+
+/* ---- Rail of earlier roles ---------------------------------------------- */
+.career-rail{position:relative;margin-top:clamp(36px,5vw,56px)}
+.rail-line{position:absolute;left:calc(170px + 14px);top:10px;bottom:10px;width:2px;translate:-50% 0;border-radius:999px;background:var(--line)}
+.rail-fill{position:absolute;inset:0;border-radius:inherit;transform-origin:top;background:linear-gradient(180deg,var(--cyan),var(--blue) 60%,var(--violet));box-shadow:0 0 14px color-mix(in srgb,var(--cyan) 45%,transparent)}
+.rail-item{position:relative;display:grid;grid-template-columns:170px 28px minmax(0,1fr);align-items:start;padding-bottom:18px;scroll-margin-top:calc(var(--header-h) + 24px)}
+.rail-item:last-child{padding-bottom:0}
+.rail-when{display:grid;justify-items:end;gap:3px;padding:20px 18px 0 0;text-align:right}
+.rail-when time{color:var(--text-soft);font:600 10px var(--mono)}
+.rail-when span{color:var(--muted);font:500 9px var(--mono)}
+.rail-node{position:relative;z-index:1;justify-self:center;width:12px;height:12px;margin-top:22px;border:2px solid var(--cyan);border-radius:50%;background:var(--bg);box-shadow:0 0 0 5px var(--bg);transition:background .25s ease}
+.rail-item.is-linked .rail-node{background:var(--cyan)}
+.rail-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:start;margin-left:12px;padding:18px 20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 88%,transparent),color-mix(in srgb,var(--surface-2) 60%,transparent));transition:border-color .25s ease,translate .25s ease}
+.rail-item.is-linked .rail-card{border-color:color-mix(in srgb,var(--cyan) 42%,var(--line));translate:4px 0}
+.rail-card .role-summary{margin-top:8px;font-size:.9rem}
+.rail-card h3{font-size:clamp(1.05rem,1.6vw,1.22rem)}
+.impact-stat{display:grid;justify-items:end;gap:4px;min-width:130px;padding-left:20px;border-left:1px solid var(--line);text-align:right}
+.impact-stat strong{color:var(--text);font-size:clamp(1.6rem,2.4vw,2.1rem);line-height:1;letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.impact-stat small{max-width:14ch;color:var(--muted);font:600 9px var(--mono);letter-spacing:.05em;text-transform:uppercase}
+
+/* ---- Responsive --------------------------------------------------------- */
+@media (max-width:1050px){
+  .current-role{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .ribbon-track{height:22px}
+  .ribbon-label{display:none}
+  .tenure-highlights{grid-template-columns:1fr}
+  .delivery-loop{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .delivery-loop .loop-return{display:none}
+  .rail-line{left:7px;translate:0 0}
+  .rail-item{grid-template-columns:16px minmax(0,1fr);row-gap:6px}
+  .rail-when{grid-column:2;grid-row:1;justify-items:start;padding:0 0 0 12px;text-align:left;grid-auto-flow:column;justify-content:start;gap:10px}
+  .rail-node{grid-column:1;grid-row:1;margin-top:3px;justify-self:start}
+  .rail-card{grid-column:2;grid-row:2;grid-template-columns:1fr;gap:14px;padding:16px}
+  .impact-stat{justify-items:start;padding:12px 0 0;border-left:0;border-top:1px solid var(--line);text-align:left}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ribbon-bar,.rail-card,.rail-node,.delivery-loop li{transition:none}
+  .rail-item.is-linked .rail-card{translate:none}
+}
+
+@media print{
+  /* Motion writes inline opacity/transform; force everything visible. */
+  .career-section *{opacity:1!important;transform:none!important}
+  .career-ribbon,.rail-line,.loop-indicator,.loop-return,.current-status .pulse{display:none!important}
+  .current-role,.rail-card,.tenure-feature{background:#fff!important;border-color:var(--line)!important;break-inside:avoid}
+  .rail-item{break-inside:avoid}
+}
